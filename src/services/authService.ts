@@ -66,22 +66,42 @@ export class AuthService {
     });
   }
 
-  // Mock Telegram OAuth
+  // Telegram OAuth с редиректом на канал
   static async loginWithTelegram(): Promise<any> {
-    console.log('🔄 Инициализация входа через Telegram...');
+    console.log('🔄 Перенаправление на Telegram канал для подписки...');
     
-    // В реальном приложении здесь будет Telegram Widget
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          id: 'telegram_' + Date.now(),
-          name: 'Telegram Пользователь',
-          email: 'user@telegram.org',
-          avatar: 'https://ui-avatars.com/api/?name=Telegram&background=0088cc&color=fff',
-          provider: 'telegram'
-        });
-      }, 1500);
-    });
+    // Сохраняем попытку входа через Telegram
+    localStorage.setItem('telegram_auth_attempt', 'true');
+    localStorage.setItem('telegram_auth_timestamp', Date.now().toString());
+    
+    // Перенаправляем на Telegram канал для подписки
+    window.open('https://t.me/+Rb3TTlbFs0kwYzky', '_blank');
+    
+    // Показываем инструкцию пользователю
+    const shouldProceed = confirm(
+      '🔔 Для завершения регистрации:\n\n' +
+      '1️⃣ Подпишитесь на Telegram канал\n' +
+      '2️⃣ Нажмите "ОК" после подписки\n\n' +
+      'Готовы продолжить?'
+    );
+    
+    if (shouldProceed) {
+      // Имитируем успешную регистрацию после подписки
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            id: 'telegram_' + Date.now(),
+            name: 'Telegram Пользователь',
+            email: 'user@telegram.org',
+            avatar: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f680.svg',
+            provider: 'telegram',
+            subscribed: true
+          });
+        }, 1000);
+      });
+    } else {
+      throw new Error('Необходимо подписаться на канал для завершения регистрации');
+    }
   }
 
   // Email регистрация
