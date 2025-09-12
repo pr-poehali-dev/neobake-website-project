@@ -8,15 +8,12 @@ import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { AuthService } from '@/services/authService';
 import { useNavigate } from 'react-router-dom';
-import AvatarSelector from '@/components/AvatarSelector';
 
 export default function Register() {
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [emailData, setEmailData] = useState({ email: '', password: '', confirmPassword: '', name: '' });
-  const [selectedAvatar, setSelectedAvatar] = useState('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f916.svg');
-  const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -70,8 +67,8 @@ export default function Register() {
         emailData.name
       );
       
-      // Добавляем выбранный аватар
-      userData.avatar = selectedAvatar;
+      // Устанавливаем дефолтный аватар
+      userData.avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(emailData.name)}&background=f97316&color=fff&size=128`;
       
       await login('email', userData);
       navigate('/profile');
@@ -153,44 +150,16 @@ export default function Register() {
             <Separator className="my-6" />
 
             {/* Email Registration Toggle */}
-            {!showEmailForm && !showAvatarSelector ? (
-              <div className="space-y-3">
-                <Button 
-                  variant="outline" 
-                  className="w-full" 
-                  size="lg"
-                  onClick={() => setShowEmailForm(true)}
-                >
-                  <Icon name="Mail" className="mr-2" size={18} />
-                  Email-регистрация
-                </Button>
-                
-                <Button 
-                  variant="outline" 
-                  className="w-full" 
-                  size="lg"
-                  onClick={() => setShowAvatarSelector(true)}
-                >
-                  <Icon name="Image" className="mr-2" size={18} />
-                  Выбрать аватар
-                </Button>
-              </div>
-            ) : showAvatarSelector ? (
-              <div className="space-y-4">
-                <AvatarSelector
-                  selectedAvatar={selectedAvatar}
-                  onAvatarSelect={setSelectedAvatar}
-                  userName={emailData.name || 'Пользователь'}
-                />
-                <Button 
-                  variant="ghost" 
-                  className="w-full" 
-                  onClick={() => setShowAvatarSelector(false)}
-                >
-                  <Icon name="ArrowLeft" className="mr-2" size={16} />
-                  Назад
-                </Button>
-              </div>
+            {!showEmailForm ? (
+              <Button 
+                variant="outline" 
+                className="w-full" 
+                size="lg"
+                onClick={() => setShowEmailForm(true)}
+              >
+                <Icon name="Mail" className="mr-2" size={18} />
+                Email-регистрация
+              </Button>
             ) : (
               <form onSubmit={handleEmailRegister} className="space-y-4">
                 <h3 className="font-semibold">Регистрация по email</h3>

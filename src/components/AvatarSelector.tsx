@@ -6,79 +6,91 @@ import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-// Анимированные аватарки
-const ANIMATED_AVATARS = [
+// Стильные уникальные аватарки для NeoBake
+const STYLISH_AVATARS = [
   {
-    id: 'robot',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f916.svg',
-    name: 'Робот',
-    animated: true
+    id: 'cosmic_chef',
+    url: 'https://ui-avatars.com/api/?name=👨‍🍳&background=f97316&color=fff&size=128&font-size=0.5',
+    name: 'Космический повар',
+    category: 'cosmic',
+    gradient: 'from-orange-400 to-orange-600'
   },
   {
-    id: 'rocket',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f680.svg',
-    name: 'Ракета',
-    animated: true
+    id: 'neon_baker',
+    url: 'https://ui-avatars.com/api/?name=🥐&background=9933ff&color=fff&size=128&font-size=0.5',
+    name: 'Неон пекарь',
+    category: 'neon',
+    gradient: 'from-purple-400 to-purple-600'
   },
   {
-    id: 'alien',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f47d.svg',
-    name: 'Инопланетянин',
-    animated: true
+    id: 'cyber_rocket',
+    url: 'https://ui-avatars.com/api/?name=🚀&background=00ffff&color=333&size=128&font-size=0.5',
+    name: 'Кибер ракета',
+    category: 'cyber',
+    gradient: 'from-cyan-400 to-blue-600'
   },
   {
-    id: 'astronaut',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f9d1-200d-1f680.svg',
-    name: 'Астронавт',
-    animated: true
+    id: 'golden_star',
+    url: 'https://ui-avatars.com/api/?name=🌟&background=ffd700&color=333&size=128&font-size=0.5',
+    name: 'Золотая звезда',
+    category: 'premium',
+    gradient: 'from-yellow-400 to-orange-500'
   },
   {
-    id: 'chef',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f9d1-200d-1f373.svg',
-    name: 'Повар',
-    animated: true
+    id: 'rainbow_heart',
+    url: 'https://ui-avatars.com/api/?name=❤️&background=ff0099&color=fff&size=128&font-size=0.5',
+    name: 'Радужное сердце',
+    category: 'vibrant',
+    gradient: 'from-pink-400 to-red-500'
   },
   {
-    id: 'croissant',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f950.svg',
-    name: 'Круассан',
-    animated: true
+    id: 'emerald_alien',
+    url: 'https://ui-avatars.com/api/?name=👽&background=10b981&color=fff&size=128&font-size=0.5',
+    name: 'Изумрудный пришелец',
+    category: 'cosmic',
+    gradient: 'from-emerald-400 to-green-600'
   },
   {
-    id: 'pizza',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f355.svg',
-    name: 'Пицца',
-    animated: true
+    id: 'diamond_robot',
+    url: 'https://ui-avatars.com/api/?name=🤖&background=94a3b8&color=fff&size=128&font-size=0.5',
+    name: 'Алмазный робот',
+    category: 'premium',
+    gradient: 'from-slate-400 to-gray-600'
   },
   {
-    id: 'burger',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f354.svg',
-    name: 'Бургер',
-    animated: true
+    id: 'sunset_coffee',
+    url: 'https://ui-avatars.com/api/?name=☕&background=ff7325&color=fff&size=128&font-size=0.5',
+    name: 'Закатный кофе',
+    category: 'warm',
+    gradient: 'from-orange-400 to-red-500'
   },
   {
-    id: 'coffee',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2615.svg',
-    name: 'Кофе',
-    animated: true
+    id: 'crystal_cake',
+    url: 'https://ui-avatars.com/api/?name=🎂&background=ec4899&color=fff&size=128&font-size=0.5',
+    name: 'Кристальный торт',
+    category: 'vibrant',
+    gradient: 'from-pink-400 to-purple-600'
   },
   {
-    id: 'cake',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f370.svg',
-    name: 'Торт',
-    animated: true
+    id: 'galaxy_pizza',
+    url: 'https://ui-avatars.com/api/?name=🍕&background=5855ff&color=fff&size=128&font-size=0.5',
+    name: 'Галактическая пицца',
+    category: 'cosmic',
+    gradient: 'from-indigo-400 to-purple-600'
   },
   {
-    id: 'star',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2b50.svg',
-    name: 'Звезда',
-    animated: true
+    id: 'electric_burger',
+    url: 'https://ui-avatars.com/api/?name=🍔&background=ffef00&color=333&size=128&font-size=0.5',
+    name: 'Электро бургер',
+    category: 'neon',
+    gradient: 'from-yellow-300 to-yellow-500'
   },
   {
-    id: 'heart',
-    url: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2764.svg',
-    name: 'Сердце',
-    animated: true
+    id: 'mystic_croissant',
+    url: 'https://ui-avatars.com/api/?name=🥐&background=7777ff&color=fff&size=128&font-size=0.5',
+    name: 'Мистический круассан',
+    category: 'cyber',
+    gradient: 'from-blue-400 to-indigo-600'
   }
 ];
 
@@ -89,7 +101,7 @@ interface AvatarSelectorProps {
 }
 
 export default function AvatarSelector({ selectedAvatar, onAvatarSelect, userName }: AvatarSelectorProps) {
-  const [activeTab, setActiveTab] = useState<'animated' | 'upload' | 'generated'>('animated');
+  const [activeTab, setActiveTab] = useState<'stylish' | 'upload' | 'generated'>('stylish');
   const [uploadedImage, setUploadedImage] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -119,7 +131,6 @@ export default function AvatarSelector({ selectedAvatar, onAvatarSelect, userNam
   };
 
   const generateGravatarStyle = (style: string) => {
-    const email = userName ? `${userName}@neobake.ru` : 'user@neobake.ru';
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(userName || 'User')}&background=${style}&color=fff&size=128`;
   };
 
@@ -146,13 +157,13 @@ export default function AvatarSelector({ selectedAvatar, onAvatarSelect, userNam
         {/* Tabs */}
         <div className="flex space-x-1 mb-6 bg-muted p-1 rounded-lg">
           <Button
-            variant={activeTab === 'animated' ? 'default' : 'ghost'}
+            variant={activeTab === 'stylish' ? 'default' : 'ghost'}
             size="sm"
             className="flex-1"
-            onClick={() => setActiveTab('animated')}
+            onClick={() => setActiveTab('stylish')}
           >
             <Icon name="Sparkles" className="mr-2" size={16} />
-            Эмодзи
+            Стильные
           </Button>
           <Button
             variant={activeTab === 'generated' ? 'default' : 'ghost'}
@@ -174,32 +185,41 @@ export default function AvatarSelector({ selectedAvatar, onAvatarSelect, userNam
           </Button>
         </div>
 
-        {/* Animated Avatars */}
-        {activeTab === 'animated' && (
-          <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
-            {ANIMATED_AVATARS.map((avatar) => (
+        {/* Stylish Avatars */}
+        {activeTab === 'stylish' && (
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
+            {STYLISH_AVATARS.map((avatar) => (
               <div
                 key={avatar.id}
-                className={`relative cursor-pointer rounded-lg p-2 transition-all hover:bg-muted/50 ${
-                  selectedAvatar === avatar.url ? 'ring-2 ring-primary bg-primary/10' : ''
+                className={`relative cursor-pointer rounded-xl p-3 transition-all hover:scale-105 hover:shadow-lg ${
+                  selectedAvatar === avatar.url ? 'ring-2 ring-primary bg-primary/10 scale-105' : ''
                 }`}
                 onClick={() => onAvatarSelect(avatar.url)}
                 title={avatar.name}
               >
-                <div className="w-12 h-12 mx-auto flex items-center justify-center">
-                  <img
-                    src={avatar.url}
-                    alt={avatar.name}
-                    className="w-10 h-10 hover:scale-110 transition-transform duration-200"
-                    style={{
-                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
-                      animation: selectedAvatar === avatar.url ? 'bounce 1s infinite' : undefined
-                    }}
+                <div className="w-16 h-16 mx-auto flex items-center justify-center relative">
+                  <div 
+                    className={`absolute inset-0 rounded-full bg-gradient-to-br ${avatar.gradient} opacity-20`}
                   />
+                  <Avatar className="w-14 h-14 relative z-10">
+                    <AvatarImage 
+                      src={avatar.url} 
+                      alt={avatar.name}
+                      className="hover:scale-110 transition-transform duration-200"
+                    />
+                    <AvatarFallback className={`bg-gradient-to-br ${avatar.gradient} text-white font-bold`}>
+                      {avatar.name[0]}
+                    </AvatarFallback>
+                  </Avatar>
                 </div>
+                
+                <p className="text-xs text-center mt-2 text-foreground/70 line-clamp-2">
+                  {avatar.name}
+                </p>
+                
                 {selectedAvatar === avatar.url && (
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
-                    <Icon name="Check" size={10} className="text-primary-foreground" />
+                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-lg">
+                    <Icon name="Check" size={12} className="text-primary-foreground" />
                   </div>
                 )}
               </div>

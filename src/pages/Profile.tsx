@@ -5,17 +5,23 @@ import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import AvatarSelector from '@/components/AvatarSelector';
 
 export default function Profile() {
   const { user, logout, isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
+  const [showAvatarSelector, setShowAvatarSelector] = useState(false);
+  const [currentAvatar, setCurrentAvatar] = useState('');
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       navigate('/register');
     }
-  }, [isAuthenticated, isLoading, navigate]);
+    if (user) {
+      setCurrentAvatar(user.avatar || '');
+    }
+  }, [isAuthenticated, isLoading, navigate, user]);
 
   if (isLoading) {
     return (
@@ -105,12 +111,20 @@ export default function Profile() {
               </CardHeader>
               <CardContent>
                 <div className="flex items-start space-x-4">
-                  <Avatar className="w-16 h-16">
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>
-                      {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
+                  <div className="relative group">
+                    <Avatar className="w-16 h-16 cursor-pointer" onClick={() => setShowAvatarSelector(true)}>
+                      <AvatarImage src={currentAvatar} alt={user.name} />
+                      <AvatarFallback>
+                        {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div 
+                      className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      onClick={() => setShowAvatarSelector(true)}
+                    >
+                      <Icon name="Plus" className="text-white" size={20} />
+                    </div>
+                  </div>
                   
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
@@ -284,6 +298,59 @@ export default function Profile() {
             </Card>
           </div>
         </div>
+
+        {/* Avatar Selector Modal */}
+        {showAvatarSelector && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-background rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-background border-b p-4 flex items-center justify-between">
+                <h2 className="text-lg font-semibold">Смена аватара</h2>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => setShowAvatarSelector(false)}
+                >
+                  <Icon name="X" size={16} />
+                </Button>
+              </div>
+              
+              <div className="p-4">
+                <AvatarSelector
+                  selectedAvatar={currentAvatar}
+                  onAvatarSelect={(newAvatar) => {
+                    setCurrentAvatar(newAvatar);
+                    // Обновляем аватар в локальном хранилище
+                    const userData = localStorage.getItem('neobake_user');
+                    if (userData) {
+                      const user = JSON.parse(userData);
+                      user.avatar = newAvatar;
+                      localStorage.setItem('neobake_user', JSON.stringify(user));
+                    }
+                  }}
+                  userName={user.name}
+                />
+                
+                <div className="flex justify-end space-x-3 mt-6">
+                  <Button 
+                    variant="outline"
+                    onClick={() => setShowAvatarSelector(false)}
+                  >
+                    Отмена
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      setShowAvatarSelector(false);
+                      // Можно добавить уведомление об успешном сохранении
+                      console.log('Аватар обновлен!');
+                    }}
+                  >
+                    Сохранить
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
