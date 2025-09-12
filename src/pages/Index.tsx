@@ -53,8 +53,8 @@ const Index = () => {
             Инновации в каждом <span className="text-primary">решении</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto animate-fade-in">
-            NeoBake объединяет лучшие ресторанные традиции с передовыми IT-технологиями, 
-            создавая уникальный опыт для наших клиентов
+            NeoBake — новая компания, которая планирует объединить лучшие ресторанные традиции 
+            с передовыми IT-технологиями для создания уникального опыта
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Button size="lg" className="text-lg px-8">
@@ -75,7 +75,7 @@ const Index = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold font-montserrat mb-4">Наши направления</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Два мира, объединенные стремлением к совершенству и инновациям
+              Наши планы по развитию двух перспективных направлений бизнеса
             </p>
           </div>
           
@@ -132,30 +132,30 @@ const Index = () => {
                 </div>
                 <CardTitle className="text-2xl font-montserrat flex items-center">
                   <Icon name="Laptop" className="mr-3 text-secondary" size={28} />
-                  IT-услуги
+                  IT-услуги <span className="ml-2 text-sm bg-orange-100 text-orange-600 px-2 py-1 rounded-full">в разработке</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 mb-4">
-                  Комплексные технологические решения для бизнеса любого масштаба - от стартапов до корпораций
+                  Планируемые технологические решения для бизнеса - находятся на стадии разработки и концепции
                 </p>
-                <ul className="space-y-2 text-sm text-gray-600">
+                <ul className="space-y-2 text-sm text-gray-500">
                   <li className="flex items-center">
-                    <Icon name="Check" className="mr-2 text-green-500" size={16} />
+                    <Icon name="Clock" className="mr-2 text-orange-500" size={16} />
                     Разработка веб-приложений
                   </li>
                   <li className="flex items-center">
-                    <Icon name="Check" className="mr-2 text-green-500" size={16} />
+                    <Icon name="Clock" className="mr-2 text-orange-500" size={16} />
                     Системы автоматизации
                   </li>
                   <li className="flex items-center">
-                    <Icon name="Check" className="mr-2 text-green-500" size={16} />
+                    <Icon name="Clock" className="mr-2 text-orange-500" size={16} />
                     Цифровая трансформация
                   </li>
                 </ul>
-                <Button variant="outline" className="mt-4 w-full">
-                  <Icon name="ArrowRight" className="ml-2" size={16} />
-                  Подробнее
+                <Button variant="outline" className="mt-4 w-full" disabled>
+                  <Icon name="Wrench" className="mr-2" size={16} />
+                  В разработке
                 </Button>
               </CardContent>
             </Card>
@@ -167,8 +167,8 @@ const Index = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-montserrat mb-4">Наши работы</h2>
-            <p className="text-xl text-gray-600">Примеры успешной реализации проектов</p>
+            <h2 className="text-4xl font-bold font-montserrat mb-4">Наши планы</h2>
+            <p className="text-xl text-gray-600">Концепции будущих проектов</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -183,10 +183,10 @@ const Index = () => {
                 </div>
                 <CardContent className="p-4">
                   <h3 className="font-bold font-montserrat mb-2">
-                    {item === 1 ? 'Ресторанное решение' : item === 2 ? 'Система заказов' : 'Мобильное приложение'}
+                    {item === 1 ? 'Концепция ресторана' : item === 2 ? 'Планируемая система заказов' : 'Идея мобильного приложения'}
                   </h3>
                   <p className="text-sm text-gray-600">
-                    {item === 1 ? 'Комплексная автоматизация ресторана' : item === 2 ? 'Платформа для онлайн-заказов' : 'Приложение для доставки еды'}
+                    {item === 1 ? 'Будущая автоматизация ресторана' : item === 2 ? 'Планируемая платформа для заказов' : 'Концепция приложения доставки'}
                   </p>
                 </CardContent>
               </Card>
@@ -195,47 +195,44 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* About Company */}
       <section className="py-20 bg-primary text-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-montserrat mb-4">Отзывы клиентов</h2>
-            <p className="text-xl opacity-90">Что говорят о нашей работе</p>
+            <h2 className="text-4xl font-bold font-montserrat mb-4">О компании NeoBake</h2>
+            <p className="text-xl opacity-90">Новая компания с амбициозными планами</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Алексей Петров",
-                role: "Владелец ресторана",
-                text: "NeoBake полностью трансформировала наш бизнес. Продажи выросли на 40% благодаря их IT-решениям."
-              },
-              {
-                name: "Мария Сидорова",
-                role: "IT-директор",
-                text: "Профессиональный подход и качественная реализация. Рекомендую всем, кто ценит результат."
-              },
-              {
-                name: "Дмитрий Козлов",
-                role: "Предприниматель",
-                text: "Уникальное сочетание кулинарного искусства и современных технологий. Очень довольны сотрудничеством."
-              }
-            ].map((testimonial, index) => (
-              <Card key={index} className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
-                <CardContent className="p-6">
-                  <div className="mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Icon key={star} name="Star" className="inline text-yellow-400" size={16} />
-                    ))}
-                  </div>
-                  <p className="mb-4 italic">"{testimonial.text}"</p>
-                  <div>
-                    <p className="font-bold">{testimonial.name}</p>
-                    <p className="text-sm opacity-80">{testimonial.role}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
+              <CardContent className="p-6 text-center">
+                <Icon name="Rocket" className="mx-auto text-yellow-400 mb-4" size={40} />
+                <h3 className="font-bold font-montserrat text-xl mb-3">Только начинаем</h3>
+                <p className="opacity-90">
+                  NeoBake — молодая компания, которая недавно открылась и готова покорять рынок инновационными решениями
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
+              <CardContent className="p-6 text-center">
+                <Icon name="Target" className="mx-auto text-yellow-400 mb-4" size={40} />
+                <h3 className="font-bold font-montserrat text-xl mb-3">Наша миссия</h3>
+                <p className="opacity-90">
+                  Объединить традиции высокой кухни с передовыми IT-технологиями для создания уникального пользовательского опыта
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
+              <CardContent className="p-6 text-center">
+                <Icon name="TrendingUp" className="mx-auto text-yellow-400 mb-4" size={40} />
+                <h3 className="font-bold font-montserrat text-xl mb-3">Планы развития</h3>
+                <p className="opacity-90">
+                  Планируем стать лидером в области технологических ресторанных решений и IT-услуг для бизнеса
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
