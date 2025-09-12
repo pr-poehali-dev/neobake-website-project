@@ -63,7 +63,7 @@ const Index = () => {
               <a href="#it-services" className="text-foreground/70 hover:text-primary transition-colors">IT-услуги</a>
               <a href="#contact" className="text-foreground/70 hover:text-primary transition-colors">Контакты</a>
             </div>
-            <Button>Личный кабинет</Button>
+            <Button onClick={() => window.location.href = '/register'}>Вход</Button>
           </div>
         </div>
       </nav>
