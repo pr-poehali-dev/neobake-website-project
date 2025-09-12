@@ -138,9 +138,9 @@ const Index = () => {
                     Кейтеринговые услуги
                   </li>
                 </ul>
-                <Button className="mt-4 w-full">
+                <Button className="mt-4 w-full" onClick={() => window.location.href = '/restaurant'}>
                   <Icon name="ArrowRight" className="ml-2" size={16} />
-                  Подробнее
+                  Подробнее о ресторанах
                 </Button>
               </CardContent>
             </Card>
