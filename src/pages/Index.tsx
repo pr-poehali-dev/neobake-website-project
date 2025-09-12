@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
+import { useAuth } from '@/hooks/useAuth';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const AnimatedLogo = () => {
   return (
@@ -47,6 +49,8 @@ const AnimatedLogo = () => {
 };
 
 const Index = () => {
+  const { user, isAuthenticated, logout } = useAuth();
+  
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -63,7 +67,28 @@ const Index = () => {
               <a href="#it-services" className="text-foreground/70 hover:text-primary transition-colors">IT-услуги</a>
               <a href="#contact" className="text-foreground/70 hover:text-primary transition-colors">Контакты</a>
             </div>
-            <Button onClick={() => window.location.href = '/register'}>Вход</Button>
+            {isAuthenticated && user ? (
+        <div className="flex items-center space-x-3">
+          <Button 
+            variant="outline" 
+            onClick={() => window.location.href = '/profile'}
+            className="flex items-center space-x-2"
+          >
+            <Avatar className="w-6 h-6">
+              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarFallback className="text-xs">
+                {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <span>{user.name}</span>
+          </Button>
+          <Button variant="ghost" onClick={logout} size="sm">
+            <Icon name="LogOut" size={16} />
+          </Button>
+        </div>
+      ) : (
+        <Button onClick={() => window.location.href = '/register'}>Вход</Button>
+      )}
           </div>
         </div>
       </nav>

@@ -226,7 +226,7 @@ export default function Register() {
                 >
                   Назад к быстрому входу
                 </Button>
-              </div>
+              </form>
             )}
           </CardContent>
         </Card>
