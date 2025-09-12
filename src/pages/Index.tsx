@@ -292,12 +292,12 @@ const Index = () => {
                   
                   <div className="flex items-center space-x-3">
                     <Icon name="Phone" className="text-primary" size={20} />
-                    <span>+7 (495) 123-45-67</span>
+                    <a href="tel:+79878562430" className="hover:text-primary transition-colors">+7 (987) 856-24-30</a>
                   </div>
                   
                   <div className="flex items-center space-x-3">
                     <Icon name="Mail" className="text-primary" size={20} />
-                    <span>hello@neobake.ru</span>
+                    <a href="mailto:danamilo636@gmail.com" className="hover:text-primary transition-colors">danamilo636@gmail.com</a>
                   </div>
                   
                   <div className="flex items-center space-x-3">
@@ -308,14 +308,25 @@ const Index = () => {
                   <div className="pt-4">
                     <p className="text-foreground/70 mb-4">Социальные сети:</p>
                     <div className="flex space-x-4">
-                      <Button variant="outline" size="sm">
-                        <Icon name="Instagram" size={16} />
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://vk.com" target="_blank" rel="noopener noreferrer">
+                          <Icon name="MessageCircle" size={16} />
+                        </a>
                       </Button>
-                      <Button variant="outline" size="sm">
-                        <Icon name="Facebook" size={16} />
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+                          <Icon name="Play" size={16} />
+                        </a>
                       </Button>
-                      <Button variant="outline" size="sm">
-                        <Icon name="Linkedin" size={16} />
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="#" onClick={(e) => { e.preventDefault(); }} className="cursor-pointer">
+                          <Icon name="Hand" size={16} />
+                        </a>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://t.me/+3mTySr48LoI4ODFi" target="_blank" rel="noopener noreferrer">
+                          <Icon name="Send" size={16} />
+                        </a>
                       </Button>
                     </div>
                   </div>
