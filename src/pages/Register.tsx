@@ -5,9 +5,76 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
 import { useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { AuthService } from '@/services/authService';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [emailData, setEmailData] = useState({ email: '', password: '', confirmPassword: '', name: '' });
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleOAuthLogin = async (provider: string) => {
+    if (isLoading) return;
+    
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      let userData;
+      
+      switch (provider) {
+        case 'google':
+          userData = await AuthService.loginWithGoogle();
+          break;
+        case 'vk':
+          userData = await AuthService.loginWithVK();
+          break;
+        case 'telegram':
+          userData = await AuthService.loginWithTelegram();
+          break;
+        default:
+          throw new Error('Неподдерживаемый провайдер');
+      }
+      
+      await login(provider, userData);
+      navigate('/profile');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Произошла ошибка при входе');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEmailRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (emailData.password !== emailData.confirmPassword) {
+      setError('Пароли не совпадают');
+      return;
+    }
+    
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      const userData = await AuthService.registerWithEmail(
+        emailData.email,
+        emailData.password,
+        emailData.name
+      );
+      
+      await login('email', userData);
+      navigate('/profile');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Произошла ошибка при регистрации');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 py-12">
@@ -29,31 +96,51 @@ export default function Register() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
+                {error}
+              </div>
+            )}
             {/* Social Login Buttons */}
             <Button 
               className="w-full bg-blue-500 hover:bg-blue-600 text-white" 
               size="lg"
-              asChild
+              disabled={isLoading}
+              onClick={() => handleOAuthLogin('telegram')}
             >
-              <a href="https://t.me/+3mTySr48LoI4ODFi" target="_blank" rel="noopener noreferrer">
+              {isLoading ? (
+                <Icon name="Loader2" className="mr-2 animate-spin" size={18} />
+              ) : (
                 <Icon name="Send" className="mr-2" size={18} />
-                Вход через Telegram
-              </a>
+              )}
+              Вход через Telegram
             </Button>
 
             <Button 
               className="w-full bg-red-500 hover:bg-red-600 text-white" 
               size="lg"
+              disabled={isLoading}
+              onClick={() => handleOAuthLogin('google')}
             >
-              <Icon name="Mail" className="mr-2" size={18} />
+              {isLoading ? (
+                <Icon name="Loader2" className="mr-2 animate-spin" size={18} />
+              ) : (
+                <Icon name="Mail" className="mr-2" size={18} />
+              )}
               Вход через Google
             </Button>
 
             <Button 
               className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
               size="lg"
+              disabled={isLoading}
+              onClick={() => handleOAuthLogin('vk')}
             >
-              <Icon name="MessageCircle" className="mr-2" size={18} />
+              {isLoading ? (
+                <Icon name="Loader2" className="mr-2 animate-spin" size={18} />
+              ) : (
+                <Icon name="MessageCircle" className="mr-2" size={18} />
+              )}
               Вход через VK
             </Button>
 
@@ -71,7 +158,7 @@ export default function Register() {
                 Email-регистрация
               </Button>
             ) : (
-              <div className="space-y-4">
+              <form onSubmit={handleEmailRegister} className="space-y-4">
                 <h3 className="font-semibold">Регистрация по email</h3>
                 
                 <div className="space-y-2">
@@ -80,6 +167,21 @@ export default function Register() {
                     id="email" 
                     type="email" 
                     placeholder="your@email.com"
+                    value={emailData.email}
+                    onChange={(e) => setEmailData({...emailData, email: e.target.value})}
+                    required
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="name">Имя</Label>
+                  <Input 
+                    id="name" 
+                    type="text" 
+                    placeholder="Ваше имя"
+                    value={emailData.name}
+                    onChange={(e) => setEmailData({...emailData, name: e.target.value})}
+                    required
                   />
                 </div>
                 
@@ -89,6 +191,10 @@ export default function Register() {
                     id="password" 
                     type="password" 
                     placeholder="Создайте надёжный пароль"
+                    value={emailData.password}
+                    onChange={(e) => setEmailData({...emailData, password: e.target.value})}
+                    required
+                    minLength={6}
                   />
                 </div>
                 
@@ -98,11 +204,18 @@ export default function Register() {
                     id="confirm-password" 
                     type="password" 
                     placeholder="Повторите пароль"
+                    value={emailData.confirmPassword}
+                    onChange={(e) => setEmailData({...emailData, confirmPassword: e.target.value})}
+                    required
                   />
                 </div>
                 
-                <Button className="w-full" size="lg">
-                  <Icon name="UserPlus" className="mr-2" size={18} />
+                <Button className="w-full" size="lg" type="submit" disabled={isLoading}>
+                  {isLoading ? (
+                    <Icon name="Loader2" className="mr-2 animate-spin" size={18} />
+                  ) : (
+                    <Icon name="UserPlus" className="mr-2" size={18} />
+                  )}
                   Создать аккаунт
                 </Button>
                 
