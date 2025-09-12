@@ -57,7 +57,7 @@ const Restaurant = () => {
                   </div>
                   <div className="flex items-center justify-center">
                     <Icon name="MapPin" className="mr-2 text-primary/60" size={14} />
-                    3-5 локаций
+                    Локации в разработке
                   </div>
                 </div>
               </CardContent>
@@ -80,7 +80,7 @@ const Restaurant = () => {
                   </div>
                   <div className="flex items-center justify-center">
                     <Icon name="MapPin" className="mr-2 text-primary/60" size={14} />
-                    7-10 локаций
+                    Локации в разработке
                   </div>
                 </div>
               </CardContent>
@@ -103,7 +103,7 @@ const Restaurant = () => {
                   </div>
                   <div className="flex items-center justify-center">
                     <Icon name="MapPin" className="mr-2 text-primary/60" size={14} />
-                    5-8 локаций
+                    Локации в разработке
                   </div>
                 </div>
               </CardContent>
