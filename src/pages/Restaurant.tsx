@@ -53,7 +53,7 @@ const Restaurant = () => {
                 <div className="space-y-2 text-sm text-foreground/60">
                   <div className="flex items-center justify-center">
                     <Icon name="Clock" className="mr-2 text-primary/60" size={14} />
-                    Планируемое открытие: 2025
+                    Открытие пока не запланировано
                   </div>
                   <div className="flex items-center justify-center">
                     <Icon name="MapPin" className="mr-2 text-primary/60" size={14} />
@@ -76,7 +76,7 @@ const Restaurant = () => {
                 <div className="space-y-2 text-sm text-foreground/60">
                   <div className="flex items-center justify-center">
                     <Icon name="Clock" className="mr-2 text-primary/60" size={14} />
-                    Планируемое открытие: 2025
+                    Открытие пока не запланировано
                   </div>
                   <div className="flex items-center justify-center">
                     <Icon name="MapPin" className="mr-2 text-primary/60" size={14} />
@@ -99,7 +99,7 @@ const Restaurant = () => {
                 <div className="space-y-2 text-sm text-foreground/60">
                   <div className="flex items-center justify-center">
                     <Icon name="Clock" className="mr-2 text-primary/60" size={14} />
-                    Планируемое открытие: 2025
+                    Открытие пока не запланировано
                   </div>
                   <div className="flex items-center justify-center">
                     <Icon name="MapPin" className="mr-2 text-primary/60" size={14} />
@@ -204,7 +204,7 @@ const Restaurant = () => {
                 <div className="text-xl">🥐</div>
               </div>
               <span className="text-lg font-semibold font-montserrat text-primary">
-                Команда разработчиков NeoBake
+                Команда разработчиков NeoTex
               </span>
               <div className="flex items-center space-x-2">
                 <div className="text-xl">🥐</div>
