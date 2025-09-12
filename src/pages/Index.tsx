@@ -23,9 +23,9 @@ const AnimatedLogo = () => {
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="bg-white/90 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50">
+      <nav className="bg-card/90 backdrop-blur-sm border-b border-border sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
@@ -33,10 +33,10 @@ const Index = () => {
               <span className="text-xl font-bold font-montserrat text-primary">NEOBAKE</span>
             </div>
             <div className="hidden md:flex space-x-8">
-              <a href="#about" className="text-gray-700 hover:text-primary transition-colors">О нас</a>
-              <a href="#restaurants" className="text-gray-700 hover:text-primary transition-colors">Рестораны</a>
-              <a href="#it-services" className="text-gray-700 hover:text-primary transition-colors">IT-услуги</a>
-              <a href="#contact" className="text-gray-700 hover:text-primary transition-colors">Контакты</a>
+              <a href="#about" className="text-foreground/70 hover:text-primary transition-colors">О нас</a>
+              <a href="#restaurants" className="text-foreground/70 hover:text-primary transition-colors">Рестораны</a>
+              <a href="#it-services" className="text-foreground/70 hover:text-primary transition-colors">IT-услуги</a>
+              <a href="#contact" className="text-foreground/70 hover:text-primary transition-colors">Контакты</a>
             </div>
             <Button>Личный кабинет</Button>
           </div>
@@ -52,7 +52,7 @@ const Index = () => {
           <h1 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
             Инновации в каждом <span className="text-primary">решении</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto animate-fade-in">
+          <p className="text-xl md:text-2xl text-foreground/70 mb-8 max-w-3xl mx-auto animate-fade-in">
             NeoBake — новая компания, которая планирует объединить лучшие ресторанные традиции 
             с передовыми IT-технологиями для создания уникального опыта
           </p>
@@ -70,11 +70,11 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section id="about" className="py-20 bg-gray-50">
+      <section id="about" className="py-20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold font-montserrat mb-4">Наши направления</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
               Наши планы по развитию двух перспективных направлений бизнеса
             </p>
           </div>
@@ -83,7 +83,7 @@ const Index = () => {
             {/* Restaurant Services */}
             <Card className="group hover:shadow-2xl transition-all duration-300 animate-scale-in">
               <CardHeader className="pb-4">
-                <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg mb-4 overflow-hidden">
+                <div className="w-full h-48 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg mb-4 overflow-hidden">
                   <img 
                     src="/img/c77c53fe-85b3-40b6-9275-2c3aba21ad41.jpg" 
                     alt="Restaurant Services" 
@@ -96,10 +96,10 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 mb-4">
+                <p className="text-foreground/70 mb-4">
                   Премиальные кулинарные решения с использованием современных технологий приготовления и обслуживания
                 </p>
-                <ul className="space-y-2 text-sm text-gray-600">
+                <ul className="space-y-2 text-sm text-foreground/70">
                   <li className="flex items-center">
                     <Icon name="Check" className="mr-2 text-green-500" size={16} />
                     Онлайн-заказ и доставка
@@ -136,20 +136,20 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 mb-4">
+                <p className="text-foreground/70 mb-4">
                   Планируемые технологические решения для бизнеса - находятся на стадии разработки и концепции
                 </p>
-                <ul className="space-y-2 text-sm text-gray-500">
+                <ul className="space-y-2 text-sm text-foreground/50">
                   <li className="flex items-center">
-                    <Icon name="Clock" className="mr-2 text-orange-500" size={16} />
+                    <Icon name="Clock" className="mr-2 text-primary/60" size={16} />
                     Разработка веб-приложений
                   </li>
                   <li className="flex items-center">
-                    <Icon name="Clock" className="mr-2 text-orange-500" size={16} />
+                    <Icon name="Clock" className="mr-2 text-primary/60" size={16} />
                     Системы автоматизации
                   </li>
                   <li className="flex items-center">
-                    <Icon name="Clock" className="mr-2 text-orange-500" size={16} />
+                    <Icon name="Clock" className="mr-2 text-primary/60" size={16} />
                     Цифровая трансформация
                   </li>
                 </ul>
@@ -168,13 +168,13 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold font-montserrat mb-4">Наши планы</h2>
-            <p className="text-xl text-gray-600">Концепции будущих проектов</p>
+            <p className="text-xl text-foreground/70">Концепции будущих проектов</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             {[1, 2, 3].map((item) => (
               <Card key={item} className="group overflow-hidden hover:shadow-xl transition-all duration-300">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 group-hover:scale-105 transition-transform duration-300">
+                <div className="h-48 bg-gradient-to-br from-primary/30 to-primary/10 group-hover:scale-105 transition-transform duration-300">
                   <img 
                     src={`/img/${item === 1 ? 'a39e51f5-e762-4a32-940f-0d349ea0e63f' : item === 2 ? 'c77c53fe-85b3-40b6-9275-2c3aba21ad41' : '7efc26aa-4e73-4ae2-8046-0164e59df13f'}.jpg`}
                     alt={`Project ${item}`}
@@ -185,7 +185,7 @@ const Index = () => {
                   <h3 className="font-bold font-montserrat mb-2">
                     {item === 1 ? 'Концепция ресторана' : item === 2 ? 'Планируемая система заказов' : 'Идея мобильного приложения'}
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-foreground/70">
                     {item === 1 ? 'Будущая автоматизация ресторана' : item === 2 ? 'Планируемая платформа для заказов' : 'Концепция приложения доставки'}
                   </p>
                 </CardContent>
@@ -204,9 +204,9 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
+            <Card className="bg-card backdrop-blur-sm border-border text-white">
               <CardContent className="p-6 text-center">
-                <Icon name="Rocket" className="mx-auto text-yellow-400 mb-4" size={40} />
+                <Icon name="Rocket" className="mx-auto text-primary mb-4" size={40} />
                 <h3 className="font-bold font-montserrat text-xl mb-3">Только начинаем</h3>
                 <p className="opacity-90">
                   NeoBake — молодая компания, которая недавно открылась и готова покорять рынок инновационными решениями
@@ -214,9 +214,9 @@ const Index = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
+            <Card className="bg-card backdrop-blur-sm border-border text-white">
               <CardContent className="p-6 text-center">
-                <Icon name="Target" className="mx-auto text-yellow-400 mb-4" size={40} />
+                <Icon name="Target" className="mx-auto text-primary mb-4" size={40} />
                 <h3 className="font-bold font-montserrat text-xl mb-3">Наша миссия</h3>
                 <p className="opacity-90">
                   Объединить традиции высокой кухни с передовыми IT-технологиями для создания уникального пользовательского опыта
@@ -224,9 +224,9 @@ const Index = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
+            <Card className="bg-card backdrop-blur-sm border-border text-white">
               <CardContent className="p-6 text-center">
-                <Icon name="TrendingUp" className="mx-auto text-yellow-400 mb-4" size={40} />
+                <Icon name="TrendingUp" className="mx-auto text-primary mb-4" size={40} />
                 <h3 className="font-bold font-montserrat text-xl mb-3">Планы развития</h3>
                 <p className="opacity-90">
                   Планируем стать лидером в области технологических ресторанных решений и IT-услуг для бизнеса
@@ -242,7 +242,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold font-montserrat mb-4">Свяжитесь с нами</h2>
-            <p className="text-xl text-gray-600">Готовы обсудить ваш проект</p>
+            <p className="text-xl text-foreground/70">Готовы обсудить ваш проект</p>
           </div>
           
           <Card className="shadow-2xl">
@@ -281,7 +281,7 @@ const Index = () => {
                   </div>
                   
                   <div className="pt-4">
-                    <p className="text-gray-600 mb-4">Социальные сети:</p>
+                    <p className="text-foreground/70 mb-4">Социальные сети:</p>
                     <div className="flex space-x-4">
                       <Button variant="outline" size="sm">
                         <Icon name="Instagram" size={16} />
