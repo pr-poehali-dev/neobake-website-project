@@ -10,8 +10,8 @@ const AnimatedLogo = () => {
     <div className="relative flex items-center justify-center">
       <div className="text-6xl animate-wave origin-bottom-right" style={{ transformOrigin: '70% 70%' }}>🥐</div>
       <div className="ml-6 relative">
-        <div className="text-5xl font-bold font-montserrat tracking-tight relative overflow-hidden">
-          <span className="inline-block text-primary animate-glow-pulse bg-gradient-to-r from-primary via-blue-400 to-primary bg-[length:200%_auto] animate-text-shimmer bg-clip-text">
+        <div className="text-5xl font-bold font-montserrat tracking-tight relative">
+          <span className="inline-block text-primary animate-glow-pulse">
             {"NEO".split("").map((letter, i) => (
               <span 
                 key={i} 
@@ -25,7 +25,7 @@ const AnimatedLogo = () => {
               </span>
             ))}
           </span>
-          <span className="inline-block text-primary ml-2 animate-glow-pulse bg-gradient-to-r from-blue-400 via-primary to-blue-400 bg-[length:200%_auto] animate-text-shimmer bg-clip-text">
+          <span className="inline-block text-primary ml-2 animate-glow-pulse">
             {"BAKE".split("").map((letter, i) => (
               <span 
                 key={i} 
@@ -82,7 +82,7 @@ const Index = () => {
             с передовыми IT-технологиями для создания уникального опыта
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-            <Button size="lg" className="text-lg px-8">
+            <Button size="lg" className="text-lg px-8" onClick={() => window.location.href = '/order'}>
               <Icon name="ShoppingCart" className="mr-2" size={20} />
               Заказать еду
             </Button>
