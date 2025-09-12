@@ -26,7 +26,7 @@ const AnimatedLogo = () => {
             ))}
           </span>
           <span className="inline-block text-primary ml-2 animate-glow-pulse">
-            {"BAKE".split("").map((letter, i) => (
+            {"TEX".split("").map((letter, i) => (
               <span 
                 key={i} 
                 className="inline-block animate-letter-bounce" 
@@ -55,7 +55,7 @@ const Index = () => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
               <div className="text-2xl">🥐</div>
-              <span className="text-xl font-bold font-montserrat text-primary">NEOBAKE</span>
+              <span className="text-xl font-bold font-montserrat text-primary">NEOTEX</span>
             </div>
             <div className="hidden md:flex space-x-8">
               <a href="#about" className="text-foreground/70 hover:text-primary transition-colors">О нас</a>
@@ -78,7 +78,7 @@ const Index = () => {
             Инновации в каждом <span className="text-primary">решении</span>
           </h1>
           <p className="text-xl md:text-2xl text-foreground/70 mb-8 max-w-3xl mx-auto animate-fade-in">
-            NeoBake — новая компания, которая планирует объединить лучшие ресторанные традиции 
+            NeoTex — новая компания, которая планирует объединить лучшие ресторанные традиции 
             с передовыми IT-технологиями для создания уникального опыта
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
@@ -224,7 +224,7 @@ const Index = () => {
       <section className="py-20 bg-primary text-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-montserrat mb-4">О компании NeoBake</h2>
+            <h2 className="text-4xl font-bold font-montserrat mb-4">О компании NeoTex</h2>
             <p className="text-xl opacity-90">Новая компания с амбициозными планами</p>
           </div>
           
@@ -234,7 +234,7 @@ const Index = () => {
                 <Icon name="Rocket" className="mx-auto text-primary mb-4" size={40} />
                 <h3 className="font-bold font-montserrat text-xl mb-3">Только начинаем</h3>
                 <p className="opacity-90">
-                  NeoBake — молодая компания, которая недавно открылась и готова покорять рынок инновационными решениями
+                  NeoTex — молодая компания, которая недавно открылась и готова покорять рынок инновационными решениями
                 </p>
               </CardContent>
             </Card>
@@ -369,7 +369,7 @@ const Index = () => {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 NeoBake. Все права защищены.</p>
+            <p>&copy; 2024 NeoTex. Все права защищены.</p>
           </div>
         </div>
       </footer>
