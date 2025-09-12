@@ -8,14 +8,39 @@ import Icon from '@/components/ui/icon';
 const AnimatedLogo = () => {
   return (
     <div className="relative flex items-center justify-center">
-      <div className="text-6xl animate-rise">🥐</div>
-      <div className="ml-4">
-        <span className="text-4xl font-bold font-montserrat tracking-tight text-primary">
-          NEO
-        </span>
-        <span className="text-4xl font-bold font-montserrat tracking-tight text-secondary">
-          BAKE
-        </span>
+      <div className="text-6xl animate-wave origin-bottom-right" style={{ transformOrigin: '70% 70%' }}>🥐</div>
+      <div className="ml-6 relative">
+        <div className="text-5xl font-bold font-montserrat tracking-tight relative overflow-hidden">
+          <span className="inline-block text-primary animate-glow-pulse bg-gradient-to-r from-primary via-blue-400 to-primary bg-[length:200%_auto] animate-text-shimmer bg-clip-text">
+            {"NEO".split("").map((letter, i) => (
+              <span 
+                key={i} 
+                className="inline-block animate-letter-bounce" 
+                style={{ 
+                  animationDelay: `${i * 0.2}s`,
+                  textShadow: '0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor'
+                }}
+              >
+                {letter}
+              </span>
+            ))}
+          </span>
+          <span className="inline-block text-primary ml-2 animate-glow-pulse bg-gradient-to-r from-blue-400 via-primary to-blue-400 bg-[length:200%_auto] animate-text-shimmer bg-clip-text">
+            {"BAKE".split("").map((letter, i) => (
+              <span 
+                key={i} 
+                className="inline-block animate-letter-bounce" 
+                style={{ 
+                  animationDelay: `${(i + 3) * 0.2}s`,
+                  textShadow: '0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor'
+                }}
+              >
+                {letter}
+              </span>
+            ))}
+          </span>
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 animate-text-shimmer"></div>
       </div>
     </div>
   );
