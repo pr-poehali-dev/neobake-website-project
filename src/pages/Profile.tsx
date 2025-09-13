@@ -400,7 +400,7 @@ export default function Profile() {
                   variant="outline"
                   asChild
                 >
-                  <a href="https://t.me/+QgiLIa1gFRY4Y2Iy" target="_blank" rel="noopener noreferrer">
+                  <a href="https://t.me/+3mTySr48LoI4ODFi" target="_blank" rel="noopener noreferrer">
                     <Icon name="MessageCircle" className="mr-2" size={16} />
                     Telegram-сообщество
                   </a>
