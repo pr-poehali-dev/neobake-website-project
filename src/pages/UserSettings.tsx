@@ -25,10 +25,16 @@ export default function UserSettings() {
   });
 
   const [paymentMethods, setPaymentMethods] = useState({
-    mir: true,
-    sbp: true,
-    yumoney: true,
+    mir: { enabled: false, connected: false, cardNumber: '', expiryDate: '', holderName: '' },
+    sbp: { enabled: false, connected: false, selectedBank: '' },
+    yumoney: { enabled: false, connected: false },
   });
+
+  const [showMirModal, setShowMirModal] = useState(false);
+  const [showSbpModal, setShowSbpModal] = useState(false);
+  const [showSmsVerification, setShowSmsVerification] = useState(false);
+  const [smsCode, setSmsCode] = useState('');
+  const [pendingCardData, setPendingCardData] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -173,58 +179,81 @@ export default function UserSettings() {
                 </p>
                 
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                  {/* Карта МИР */}
+                  <div className="flex items-center justify-between p-4 border rounded-lg">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-6 bg-gradient-to-r from-green-500 to-blue-500 rounded flex items-center justify-center">
                         <span className="text-xs font-bold text-white">МИР</span>
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h4 className="font-medium">Карта МИР</h4>
-                        <p className="text-sm text-muted-foreground">Российская платежная система</p>
+                        {paymentMethods.mir.connected ? (
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm text-green-600">
+                              **** {paymentMethods.mir.cardNumber.slice(-4)} подключена
+                            </p>
+                            <Badge variant="default" className="text-xs">Активна</Badge>
+                          </div>
+                        ) : (
+                          <p className="text-sm text-muted-foreground">Нажмите "Подключить" для привязки карты</p>
+                        )}
                       </div>
                     </div>
-                    <Switch
-                      checked={paymentMethods.mir}
-                      onCheckedChange={(checked) => 
-                        setPaymentMethods(prev => ({ ...prev, mir: checked }))
-                      }
-                    />
+                    <Button 
+                      variant={paymentMethods.mir.connected ? "outline" : "default"}
+                      size="sm"
+                      onClick={() => setShowMirModal(true)}
+                    >
+                      {paymentMethods.mir.connected ? "Настроить" : "Подключить"}
+                    </Button>
                   </div>
 
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                  {/* СБП */}
+                  <div className="flex items-center justify-between p-4 border rounded-lg">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded flex items-center justify-center">
                         <span className="text-xs font-bold text-white">СБП</span>
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h4 className="font-medium">Система быстрых платежей</h4>
-                        <p className="text-sm text-muted-foreground">Мгновенные переводы по номеру телефона</p>
+                        {paymentMethods.sbp.connected ? (
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm text-green-600">
+                              {paymentMethods.sbp.selectedBank} подключен
+                            </p>
+                            <Badge variant="default" className="text-xs">Активен</Badge>
+                          </div>
+                        ) : (
+                          <p className="text-sm text-muted-foreground">Выберите банк для быстрых платежей</p>
+                        )}
                       </div>
                     </div>
-                    <Switch
-                      checked={paymentMethods.sbp}
-                      onCheckedChange={(checked) => 
-                        setPaymentMethods(prev => ({ ...prev, sbp: checked }))
-                      }
-                    />
+                    <Button 
+                      variant={paymentMethods.sbp.connected ? "outline" : "default"}
+                      size="sm"
+                      onClick={() => setShowSbpModal(true)}
+                    >
+                      {paymentMethods.sbp.connected ? "Сменить банк" : "Выбрать банк"}
+                    </Button>
                   </div>
 
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                  {/* ЮMoney */}
+                  <div className="flex items-center justify-between p-4 border rounded-lg opacity-60">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded flex items-center justify-center">
                         <span className="text-xs font-bold text-white">ЮM</span>
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h4 className="font-medium">ЮMoney</h4>
                         <p className="text-sm text-muted-foreground">Электронные деньги и карты</p>
                       </div>
                     </div>
-                    <Switch
-                      checked={paymentMethods.yumoney}
-                      onCheckedChange={(checked) => 
-                        setPaymentMethods(prev => ({ ...prev, yumoney: checked }))
-                      }
-                    />
+                    <div className="flex items-center gap-3">
+                      <Badge variant="secondary">В разработке</Badge>
+                      <Button variant="outline" size="sm" disabled>
+                        Скоро
+                      </Button>
+                    </div>
                   </div>
 
 
@@ -332,6 +361,190 @@ export default function UserSettings() {
               </Button>
             </div>
           </div>
+
+          {/* Модалки */}
+          {/* Модалка привязки карты МИР */}
+          {showMirModal && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+              <div className="bg-background rounded-lg max-w-md w-full p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold">Привязка карты МИР</h2>
+                  <Button variant="ghost" size="sm" onClick={() => setShowMirModal(false)}>
+                    <Icon name="X" size={16} />
+                  </Button>
+                </div>
+                
+                {!showSmsVerification ? (
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="cardNumber">Номер карты</Label>
+                      <Input
+                        id="cardNumber"
+                        placeholder="0000 0000 0000 0000"
+                        maxLength={19}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+                          e.target.value = value;
+                        }}
+                      />
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="expiryDate">Срок действия</Label>
+                        <Input
+                          id="expiryDate"
+                          placeholder="ММ/ГГ"
+                          maxLength={5}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, '').replace(/(\d{2})(?=\d)/, '$1/');
+                            e.target.value = value;
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="cvv">CVV</Label>
+                        <Input
+                          id="cvv"
+                          type="password"
+                          placeholder="123"
+                          maxLength={3}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="holderName">Имя держателя карты</Label>
+                      <Input
+                        id="holderName"
+                        placeholder="IVAN IVANOV"
+                        style={{ textTransform: 'uppercase' }}
+                      />
+                    </div>
+                    
+                    <Button 
+                      className="w-full" 
+                      onClick={() => {
+                        setShowSmsVerification(true);
+                        // Имитация отправки SMS
+                        alert('SMS с кодом подтверждения отправлено на ваш номер');
+                      }}
+                    >
+                      Продолжить
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <Icon name="MessageSquare" className="mx-auto mb-4" size={48} />
+                      <h3 className="font-semibold mb-2">Подтверждение по SMS</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Введите код из SMS, отправленного на номер +7 *** *** **67
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="smsCode">Код из SMS</Label>
+                      <Input
+                        id="smsCode"
+                        value={smsCode}
+                        onChange={(e) => setSmsCode(e.target.value)}
+                        placeholder="123456"
+                        maxLength={6}
+                        className="text-center text-lg"
+                      />
+                    </div>
+                    
+                    <div className="flex gap-3">
+                      <Button 
+                        variant="outline" 
+                        className="flex-1"
+                        onClick={() => setShowSmsVerification(false)}
+                      >
+                        Назад
+                      </Button>
+                      <Button 
+                        className="flex-1"
+                        onClick={() => {
+                          if (smsCode.length === 6) {
+                            setPaymentMethods(prev => ({
+                              ...prev,
+                              mir: {
+                                ...prev.mir,
+                                connected: true,
+                                cardNumber: '2200123456789012'
+                              }
+                            }));
+                            setShowMirModal(false);
+                            setShowSmsVerification(false);
+                            setSmsCode('');
+                            alert('Карта МИР успешно подключена!');
+                          }
+                        }}
+                      >
+                        Подтвердить
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Модалка выбора банка для СБП */}
+          {showSbpModal && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+              <div className="bg-background rounded-lg max-w-md w-full p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold">Выбор банка для СБП</h2>
+                  <Button variant="ghost" size="sm" onClick={() => setShowSbpModal(false)}>
+                    <Icon name="X" size={16} />
+                  </Button>
+                </div>
+                
+                <div className="space-y-3">
+                  {[
+                    { name: 'Сбербанк', color: 'bg-green-600', app: 'sberbankonline://' },
+                    { name: 'Альфа-Банк', color: 'bg-red-600', app: 'alfabank://' },
+                    { name: 'ВТБ', color: 'bg-blue-600', app: 'vtb-online://' },
+                    { name: 'Тинькофф', color: 'bg-yellow-500', app: 'tinkoff://' },
+                    { name: 'Райффайзенбанк', color: 'bg-yellow-600', app: 'raiffeisen://' },
+                    { name: 'Газпромбанк', color: 'bg-blue-800', app: 'gpb://' },
+                    { name: 'Открытие', color: 'bg-orange-600', app: 'openbank://' },
+                    { name: 'МТС Банк', color: 'bg-red-500', app: 'mtsbank://' }
+                  ].map((bank) => (
+                    <button
+                      key={bank.name}
+                      className="w-full flex items-center gap-3 p-3 border rounded-lg hover:bg-accent transition-colors"
+                      onClick={() => {
+                        // Имитация перехода в приложение банка
+                        setPaymentMethods(prev => ({
+                          ...prev,
+                          sbp: {
+                            ...prev.sbp,
+                            connected: true,
+                            selectedBank: bank.name
+                          }
+                        }));
+                        setShowSbpModal(false);
+                        alert(`Переход в приложение ${bank.name}...`);
+                        // В реальном приложении здесь был бы: window.location.href = bank.app;
+                      }}
+                    >
+                      <div className={`w-10 h-10 ${bank.color} rounded-full flex items-center justify-center text-white font-bold text-sm`}>
+                        {bank.name.charAt(0)}
+                      </div>
+                      <div className="text-left">
+                        <h4 className="font-medium">{bank.name}</h4>
+                        <p className="text-sm text-muted-foreground">Нажмите для перехода в приложение</p>
+                      </div>
+                      <Icon name="ExternalLink" className="ml-auto" size={16} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
