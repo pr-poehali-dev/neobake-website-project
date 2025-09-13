@@ -28,7 +28,6 @@ export default function UserSettings() {
     mir: true,
     sbp: true,
     yumoney: true,
-    cash: false,
   });
 
   useEffect(() => {
@@ -228,21 +227,7 @@ export default function UserSettings() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <Icon name="Banknote" className="text-green-600" size={24} />
-                      <div>
-                        <h4 className="font-medium">Наличные</h4>
-                        <p className="text-sm text-muted-foreground">Оплата курьеру при получении</p>
-                      </div>
-                    </div>
-                    <Switch
-                      checked={paymentMethods.cash}
-                      onCheckedChange={(checked) => 
-                        setPaymentMethods(prev => ({ ...prev, cash: checked }))
-                      }
-                    />
-                  </div>
+
                 </div>
               </CardContent>
             </Card>
