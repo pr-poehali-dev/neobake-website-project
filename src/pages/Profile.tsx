@@ -352,7 +352,7 @@ export default function Profile() {
                 <Button 
                   className="w-full justify-start" 
                   variant="outline"
-                  disabled
+                  onClick={() => navigate('/settings')}
                 >
                   <Icon name="Settings" className="mr-2" size={16} />
                   Настройки
