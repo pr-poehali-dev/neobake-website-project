@@ -6,6 +6,8 @@ import Icon from '@/components/ui/icon';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import AvatarSelector from '@/components/AvatarSelector';
 
 export default function Profile() {
@@ -13,6 +15,12 @@ export default function Profile() {
   const navigate = useNavigate();
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [currentAvatar, setCurrentAvatar] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState({
+    firstName: '',
+    lastName: '',
+    birthDate: ''
+  });
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -20,6 +28,13 @@ export default function Profile() {
     }
     if (user) {
       setCurrentAvatar(user.avatar || '');
+      // Разделяем полное имя на имя и фамилию
+      const nameParts = user.name.split(' ');
+      setEditData({
+        firstName: nameParts[0] || '',
+        lastName: nameParts.slice(1).join(' ') || '',
+        birthDate: user.birthDate || ''
+      });
     }
   }, [isAuthenticated, isLoading, navigate, user]);
 
@@ -128,14 +143,121 @@ export default function Profile() {
                   
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="text-xl font-semibold">{user.name}</h3>
+                      <div className="flex items-center space-x-2">
+                        {!isEditing ? (
+                          <>
+                            <h3 className="text-xl font-semibold">{user.name}</h3>
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              onClick={() => setIsEditing(true)}
+                              className="h-8 w-8 p-0"
+                            >
+                              <Icon name="Pencil" size={14} />
+                            </Button>
+                          </>
+                        ) : (
+                          <div className="grid grid-cols-2 gap-2 flex-1">
+                            <div>
+                              <Label htmlFor="firstName" className="text-xs">Имя</Label>
+                              <Input
+                                id="firstName"
+                                value={editData.firstName}
+                                onChange={(e) => setEditData(prev => ({ ...prev, firstName: e.target.value }))}
+                                placeholder="Имя"
+                                className="h-8"
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="lastName" className="text-xs">Фамилия</Label>
+                              <Input
+                                id="lastName"
+                                value={editData.lastName}
+                                onChange={(e) => setEditData(prev => ({ ...prev, lastName: e.target.value }))}
+                                placeholder="Фамилия"
+                                className="h-8"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
                       <Badge className={`${providerInfo.color} text-white`}>
                         <Icon name={providerInfo.icon as any} className="mr-1" size={12} />
                         {providerInfo.name}
                       </Badge>
                     </div>
                     
-                    <p className="text-foreground/70 mb-4">{user.email}</p>
+                    <p className="text-foreground/70 mb-2">{user.email}</p>
+                    
+                    {/* Дата рождения */}
+                    <div className="mb-4">
+                      {!isEditing ? (
+                        <p className="text-sm text-foreground/60">
+                          {editData.birthDate ? (
+                            <>
+                              <Icon name="Calendar" className="inline mr-1" size={14} />
+                              Дата рождения: {new Date(editData.birthDate).toLocaleDateString('ru-RU')}
+                            </>
+                          ) : (
+                            <span className="text-foreground/40">Дата рождения не указана</span>
+                          )}
+                        </p>
+                      ) : (
+                        <div className="max-w-xs">
+                          <Label htmlFor="birthDate" className="text-xs">Дата рождения</Label>
+                          <Input
+                            id="birthDate"
+                            type="date"
+                            value={editData.birthDate}
+                            onChange={(e) => setEditData(prev => ({ ...prev, birthDate: e.target.value }))}
+                            className="h-8"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Кнопки сохранения/отмены в режиме редактирования */}
+                    {isEditing && (
+                      <div className="flex space-x-2 mb-4">
+                        <Button 
+                          size="sm" 
+                          onClick={() => {
+                            // Сохраняем данные
+                            const updatedUser = {
+                              ...user,
+                              name: `${editData.firstName} ${editData.lastName}`.trim(),
+                              birthDate: editData.birthDate
+                            };
+                            
+                            localStorage.setItem('neobake_user', JSON.stringify(updatedUser));
+                            setIsEditing(false);
+                            
+                            // Обновляем локальное состояние
+                            window.location.reload(); // Простое обновление для демонстрации
+                          }}
+                        >
+                          <Icon name="Check" className="mr-1" size={14} />
+                          Сохранить
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => {
+                            setIsEditing(false);
+                            // Возвращаем исходные данные
+                            const nameParts = user.name.split(' ');
+                            setEditData({
+                              firstName: nameParts[0] || '',
+                              lastName: nameParts.slice(1).join(' ') || '',
+                              birthDate: user.birthDate || ''
+                            });
+                          }}
+                        >
+                          <Icon name="X" className="mr-1" size={14} />
+                          Отмена
+                        </Button>
+                      </div>
+                    )}
                     
                     <div className="flex flex-wrap gap-2">
                       <Badge variant="outline">
