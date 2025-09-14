@@ -1,204 +1,191 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import Header from '@/components/layout/Header';
+import { useAuth } from '@/contexts/AuthContext';
 
 const HomePage = () => {
-  const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const { isLoggedIn, user } = useAuth();
 
-  const featuredProducts = [
+  const heroSlides = [
     {
-      id: 1,
-      name: 'Круассан с миндалем',
-      price: 220,
-      image: '/img/ceb7dce3-214c-4e54-8416-7d13701d38b7.jpg',
-      category: 'Выпечка',
-      rating: 4.9,
-      isNew: true
+      image: '/img/d57940ae-c112-41e2-9e2a-235cac7f2818.jpg',
+      title: 'Свежие круассаны каждое утро',
+      subtitle: 'Приготовлено с любовью французскими пекарями'
     },
     {
-      id: 2,
-      name: 'Авторский хлеб на закваске',
-      price: 450,
-      image: '/img/de9fd127-4472-4f92-a045-3d04fc8d09cd.jpg',
-      category: 'Хлеб',
-      rating: 4.8,
-      isPopular: true
+      image: '/img/d57940ae-c112-41e2-9e2a-235cac7f2818.jpg',
+      title: 'Торты на заказ',
+      subtitle: 'Создаем уникальные десерты для ваших праздников'
     },
     {
-      id: 3,
-      name: 'Торт "Медовик"',
-      price: 890,
-      image: '/api/placeholder/300/200',
-      category: 'Торты',
-      rating: 4.9,
-      isNew: true
-    },
-    {
-      id: 4,
-      name: 'Эклеры с ванильным кремом',
-      price: 180,
-      image: '/api/placeholder/300/200',
-      category: 'Пирожные',
-      rating: 4.7,
-      isPopular: true
+      image: '/img/d57940ae-c112-41e2-9e2a-235cac7f2818.jpg',
+      title: 'Хлеб на закваске',
+      subtitle: 'Традиционные рецепты и натуральные ингредиенты'
     }
   ];
 
   const categories = [
-    { name: 'Хлеб', icon: 'Wheat', count: 15 },
-    { name: 'Выпечка', icon: 'Cookie', count: 28 },
-    { name: 'Торты', icon: 'Cake', count: 12 },
-    { name: 'Пирожные', icon: 'Cherry', count: 24 },
-    { name: 'Кофе', icon: 'Coffee', count: 8 },
-    { name: 'Напитки', icon: 'GlassWater', count: 16 }
+    { id: 1, name: 'Хлеб и булочки', icon: 'Wheat', count: 15 },
+    { id: 2, name: 'Торты', icon: 'Cake', count: 8 },
+    { id: 3, name: 'Круассаны', icon: 'Coffee', count: 6 },
+    { id: 4, name: 'Пирожные', icon: 'Cherry', count: 12 },
+    { id: 5, name: 'Печенье', icon: 'Cookie', count: 10 },
+    { id: 6, name: 'Пироги', icon: 'PieChart', count: 7 }
   ];
 
+  const popularItems = [
+    { id: 1, name: 'Круассан с шоколадом', price: 120, rating: 4.8, image: '/img/d57940ae-c112-41e2-9e2a-235cac7f2818.jpg' },
+    { id: 2, name: 'Наполеон', price: 180, rating: 4.9, image: '/img/d57940ae-c112-41e2-9e2a-235cac7f2818.jpg' },
+    { id: 3, name: 'Багет французский', price: 80, rating: 4.7, image: '/img/d57940ae-c112-41e2-9e2a-235cac7f2818.jpg' },
+    { id: 4, name: 'Эклер с кремом', price: 95, rating: 4.6, image: '/img/d57940ae-c112-41e2-9e2a-235cac7f2818.jpg' }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [heroSlides.length]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
-      {/* Header */}
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl flex items-center justify-center">
-                <Icon name="Wheat" className="text-white" size={24} />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">NeoBake</h1>
-                <p className="text-sm text-gray-600">Пекарня будущего</p>
-              </div>
-            </div>
-
-            <nav className="hidden md:flex items-center gap-6">
-              <Button variant="ghost" onClick={() => navigate('/menu')}>
-                <Icon name="ChefHat" size={16} className="mr-2" />
-                Меню
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      {/* Hero секция */}
+      <section className="relative h-[600px] overflow-hidden">
+        <div className="absolute inset-0">
+          <img 
+            src={heroSlides[currentSlide].image}
+            alt="NeoBake" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 h-full flex items-center">
+          <div className="text-white max-w-2xl">
+            <h1 className="text-5xl md:text-6xl font-bold mb-4">
+              {heroSlides[currentSlide].title}
+            </h1>
+            <p className="text-xl mb-8 opacity-90">
+              {heroSlides[currentSlide].subtitle}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button asChild size="lg" className="text-lg">
+                <Link to="/menu">
+                  <Icon name="ShoppingBag" className="mr-2" />
+                  Смотреть меню
+                </Link>
               </Button>
-              <Button variant="ghost" onClick={() => navigate('/booking')}>
-                <Icon name="Calendar" size={16} className="mr-2" />
-                Бронирование
+              <Button asChild variant="outline" size="lg" className="text-lg bg-white/10 border-white text-white hover:bg-white hover:text-black">
+                <Link to="/booking">
+                  <Icon name="Calendar" className="mr-2" />
+                  Забронировать столик
+                </Link>
               </Button>
-              <Button variant="ghost" onClick={() => navigate('/track-order')}>
-                <Icon name="Truck" size={16} className="mr-2" />
-                Доставка
-              </Button>
-            </nav>
-
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm">
-                <Icon name="ShoppingCart" size={16} className="mr-2" />
-                Корзина
-                <Badge variant="destructive" className="ml-2">3</Badge>
-              </Button>
-              
-              {isLoggedIn ? (
-                <Button variant="ghost" size="sm" onClick={() => navigate('/profile')}>
-                  <Icon name="User" size={16} className="mr-2" />
-                  Профиль
-                </Button>
-              ) : (
-                <Button onClick={() => navigate('/login')}>Войти</Button>
-              )}
             </div>
           </div>
         </div>
-      </header>
 
-      {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-              Добро пожаловать в NeoBake
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Современная пекарня с традиционными рецептами и инновационными технологиями. 
-              Свежая выпечка каждый день, доставка по городу и онлайн-заказы.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="text-lg px-8" onClick={() => navigate('/menu')}>
-                <Icon name="ChefHat" size={20} className="mr-2" />
-                Посмотреть меню
-              </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8" onClick={() => navigate('/booking')}>
-                <Icon name="Calendar" size={20} className="mr-2" />
-                Забронировать столик
-              </Button>
-            </div>
-          </div>
+        {/* Индикаторы слайдов */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-colors ${
+                index === currentSlide ? 'bg-white' : 'bg-white/50'
+              }`}
+            />
+          ))}
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="py-16 px-4 bg-white">
-        <div className="container mx-auto">
-          <h3 className="text-3xl font-bold text-center mb-12">Категории продукции</h3>
+      {/* Приветствие для авторизованных пользователей */}
+      {isLoggedIn && (
+        <section className="py-8 bg-gradient-to-r from-amber-50 to-orange-50">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  Добро пожаловать, {user?.name}! 👋
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  У вас {user?.loyaltyPoints} баллов лояльности
+                </p>
+              </div>
+              <Badge variant="secondary" className="bg-amber-100 text-amber-800">
+                VIP клиент
+              </Badge>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Категории */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Наши категории</h2>
+          
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {categories.map((category, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow cursor-pointer group">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:from-orange-200 group-hover:to-amber-200 transition-colors">
-                    <Icon name={category.icon} className="text-orange-600" size={24} />
-                  </div>
-                  <h4 className="font-semibold mb-2">{category.name}</h4>
-                  <p className="text-sm text-gray-500">{category.count} товаров</p>
-                </CardContent>
-              </Card>
+            {categories.map((category) => (
+              <Link key={category.id} to="/menu">
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
+                  <CardContent className="p-6 text-center">
+                    <div className="w-16 h-16 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                      <Icon name={category.icon as any} size={24} className="text-amber-600" />
+                    </div>
+                    <h3 className="font-semibold text-sm mb-2">{category.name}</h3>
+                    <p className="text-xs text-muted-foreground">{category.count} позиций</p>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto">
+      {/* Популярные товары */}
+      <section className="py-16 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between mb-12">
-            <h3 className="text-3xl font-bold">Рекомендуемые товары</h3>
-            <Button variant="outline" onClick={() => navigate('/menu')}>
-              Показать все
-              <Icon name="ArrowRight" size={16} className="ml-2" />
+            <h2 className="text-3xl font-bold">Популярные товары</h2>
+            <Button asChild variant="outline">
+              <Link to="/menu">
+                Все товары
+                <Icon name="ArrowRight" className="ml-2" size={16} />
+              </Link>
             </Button>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
-              <Card key={product.id} className="group hover:shadow-xl transition-shadow">
-                <div className="relative overflow-hidden rounded-t-lg">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {popularItems.map((item) => (
+              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="aspect-square overflow-hidden">
                   <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    src={item.image} 
+                    alt={item.name}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform"
                   />
-                  <div className="absolute top-3 left-3 flex gap-2">
-                    {product.isNew && <Badge variant="secondary">Новинка</Badge>}
-                    {product.isPopular && <Badge>Популярное</Badge>}
-                  </div>
-                  <div className="absolute top-3 right-3">
-                    <Button variant="outline" size="sm" className="rounded-full w-10 h-10 p-0">
-                      <Icon name="Heart" size={16} />
-                    </Button>
-                  </div>
                 </div>
                 <CardContent className="p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="outline">{product.category}</Badge>
+                  <h3 className="font-semibold mb-2">{item.name}</h3>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-lg font-bold text-primary">{item.price} ₽</span>
                     <div className="flex items-center gap-1">
-                      <Icon name="Star" className="text-yellow-500" size={14} />
-                      <span className="text-sm text-gray-600">{product.rating}</span>
+                      <Icon name="Star" size={16} className="text-yellow-500 fill-current" />
+                      <span className="text-sm text-muted-foreground">{item.rating}</span>
                     </div>
                   </div>
-                  <h4 className="font-semibold mb-3">{product.name}</h4>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xl font-bold text-orange-600">{product.price} ₽</span>
-                    <Button size="sm">
-                      <Icon name="Plus" size={16} className="mr-1" />
-                      В корзину
-                    </Button>
-                  </div>
+                  <Button className="w-full" size="sm">
+                    <Icon name="Plus" size={16} className="mr-2" />
+                    В корзину
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -206,112 +193,114 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-16 px-4 bg-white">
-        <div className="container mx-auto">
-          <h3 className="text-3xl font-bold text-center mb-12">Почему выбирают NeoBake</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* Преимущества */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Почему выбирают нас</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Clock" className="text-green-600" size={24} />
+              <div className="w-20 h-20 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="Clock" size={32} className="text-green-600" />
               </div>
-              <h4 className="font-semibold mb-2">Свежесть каждый день</h4>
-              <p className="text-gray-600">Выпечка производится ежедневно из свежих ингредиентов</p>
+              <h3 className="text-xl font-semibold mb-4">Быстрая доставка</h3>
+              <p className="text-muted-foreground">Доставляем свежую выпечку за 30-60 минут по всему городу</p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Truck" className="text-blue-600" size={24} />
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="Award" size={32} className="text-blue-600" />
               </div>
-              <h4 className="font-semibold mb-2">Быстрая доставка</h4>
-              <p className="text-gray-600">Доставка по городу за 30-60 минут</p>
+              <h3 className="text-xl font-semibold mb-4">Высокое качество</h3>
+              <p className="text-muted-foreground">Используем только натуральные ингредиенты и проверенные рецепты</p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-violet-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Shield" className="text-purple-600" size={24} />
+              <div className="w-20 h-20 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="Heart" size={32} className="text-purple-600" />
               </div>
-              <h4 className="font-semibold mb-2">Гарантия качества</h4>
-              <p className="text-gray-600">Используем только натуральные ингредиенты</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-rose-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Heart" className="text-rose-600" size={24} />
-              </div>
-              <h4 className="font-semibold mb-2">Программа лояльности</h4>
-              <p className="text-gray-600">Накапливайте бонусы и получайте скидки</p>
+              <h3 className="text-xl font-semibold mb-4">Сделано с любовью</h3>
+              <p className="text-muted-foreground">Каждое изделие создается вручную нашими мастерами-кондитерами</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-4">
-        <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* CTA секция */}
+      <section className="py-16 bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-4">Готовы попробовать?</h2>
+          <p className="text-xl mb-8 opacity-90">
+            Закажите свежую выпечку прямо сейчас и получите скидку 15% на первый заказ
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild size="lg" variant="secondary" className="text-lg">
+              <Link to="/menu">
+                <Icon name="ShoppingBag" className="mr-2" />
+                Заказать сейчас
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="text-lg bg-transparent border-white text-white hover:bg-white hover:text-orange-500">
+              <Link to="/booking">
+                <Icon name="Phone" className="mr-2" />
+                Связаться с нами
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Футер */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 rounded-lg flex items-center justify-center">
-                  <Icon name="Wheat" className="text-white" size={20} />
-                </div>
-                <h4 className="text-xl font-bold">NeoBake</h4>
+              <div className="flex items-center space-x-3 mb-4">
+                <img 
+                  src="/img/f85efabd-7d93-4e4a-aaf2-b669994488b9.jpg" 
+                  alt="NeoBake" 
+                  className="w-8 h-8 rounded-lg"
+                />
+                <span className="text-xl font-bold">NeoBake</span>
               </div>
-              <p className="text-gray-400 mb-4">Современная пекарня с традиционными рецептами</p>
-              <div className="flex gap-3">
-                <Button variant="outline" size="sm" className="rounded-full w-10 h-10 p-0">
-                  <Icon name="Phone" size={16} />
-                </Button>
-                <Button variant="outline" size="sm" className="rounded-full w-10 h-10 p-0">
-                  <Icon name="Mail" size={16} />
-                </Button>
-                <Button variant="outline" size="sm" className="rounded-full w-10 h-10 p-0">
-                  <Icon name="MapPin" size={16} />
-                </Button>
-              </div>
+              <p className="text-gray-400 text-sm">
+                Современная пекарня с традиционными рецептами и инновационным подходом к качеству.
+              </p>
             </div>
 
             <div>
-              <h5 className="font-semibold mb-4">Меню</h5>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Хлеб</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Выпечка</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Торты</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Напитки</a></li>
+              <h4 className="font-semibold mb-4">Меню</h4>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li><Link to="/menu" className="hover:text-white">Хлеб и булочки</Link></li>
+                <li><Link to="/menu" className="hover:text-white">Торты</Link></li>
+                <li><Link to="/menu" className="hover:text-white">Круассаны</Link></li>
+                <li><Link to="/menu" className="hover:text-white">Пирожные</Link></li>
               </ul>
             </div>
 
             <div>
-              <h5 className="font-semibold mb-4">Сервисы</h5>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Доставка</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Самовывоз</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Бронирование</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Корпоративные заказы</a></li>
+              <h4 className="font-semibold mb-4">Сервисы</h4>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li><Link to="/booking" className="hover:text-white">Бронирование столиков</Link></li>
+                <li><Link to="/tracking" className="hover:text-white">Отследить заказ</Link></li>
+                <li><Link to="/profile" className="hover:text-white">Личный кабинет</Link></li>
+                <li><Link to="/" className="hover:text-white">Программа лояльности</Link></li>
               </ul>
             </div>
 
             <div>
-              <h5 className="font-semibold mb-4">Контакты</h5>
-              <div className="space-y-3 text-gray-400">
-                <div className="flex items-center gap-2">
-                  <Icon name="MapPin" size={16} />
-                  <span>ул. Пекарная, 42</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Icon name="Phone" size={16} />
-                  <span>+7 (999) 123-45-67</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Icon name="Clock" size={16} />
-                  <span>Пн-Вс: 7:00 - 22:00</span>
-                </div>
+              <h4 className="font-semibold mb-4">Контакты</h4>
+              <div className="space-y-2 text-sm text-gray-400">
+                <p>📞 +7 (999) 123-45-67</p>
+                <p>📧 info@neobake.ru</p>
+                <p>📍 ул. Пекарская, 15</p>
+                <p>🕒 Ежедневно 7:00 - 22:00</p>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 NeoBake. Все права защищены.</p>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+            <p>© 2024 NeoBake. Все права защищены.</p>
           </div>
         </div>
       </footer>

@@ -1,313 +1,412 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
+import Header from '@/components/layout/Header';
+import { useCart } from '@/contexts/CartContext';
+import { useToast } from '@/components/ui/use-toast';
+
+interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+  rating: number;
+  isNew?: boolean;
+  isPopular?: boolean;
+  allergens?: string[];
+}
 
 const MenuPage = () => {
-  const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [cart, setCart] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredItems, setFilteredItems] = useState<MenuItem[]>([]);
+  const { addToCart } = useCart();
+  const { toast } = useToast();
 
   const categories = [
-    { id: 'all', name: 'Все категории', count: 95 },
-    { id: 'bread', name: 'Хлеб', count: 15 },
-    { id: 'pastry', name: 'Выпечка', count: 28 },
-    { id: 'cakes', name: 'Торты', count: 12 },
-    { id: 'desserts', name: 'Пирожные', count: 24 },
-    { id: 'coffee', name: 'Кофе', count: 8 },
-    { id: 'drinks', name: 'Напитки', count: 16 }
+    { id: 'all', name: 'Все', icon: 'Grid3X3' },
+    { id: 'bread', name: 'Хлеб и булочки', icon: 'Wheat' },
+    { id: 'cakes', name: 'Торты', icon: 'Cake' },
+    { id: 'croissants', name: 'Круассаны', icon: 'Coffee' },
+    { id: 'pastries', name: 'Пирожные', icon: 'Cherry' },
+    { id: 'cookies', name: 'Печенье', icon: 'Cookie' },
+    { id: 'pies', name: 'Пироги', icon: 'PieChart' }
   ];
 
-  const products = [
-    // Хлеб
+  const menuItems: MenuItem[] = [
+    // Хлеб и булочки
     {
-      id: 1,
-      name: 'Авторский хлеб на закваске',
-      price: 450,
-      image: '/img/de9fd127-4472-4f92-a045-3d04fc8d09cd.jpg',
-      category: 'bread',
-      description: 'Хлеб на собственной закваске с хрустящей корочкой',
-      rating: 4.8,
-      isPopular: true,
-      ingredients: 'Мука пшеничная, закваска, соль, вода'
-    },
-    {
-      id: 2,
-      name: 'Ржаной хлеб',
-      price: 320,
-      image: '/img/de9fd127-4472-4f92-a045-3d04fc8d09cd.jpg',
-      category: 'bread',
-      description: 'Традиционный ржаной хлеб с семенами',
-      rating: 4.6,
-      ingredients: 'Мука ржаная, семена подсолнуха, соль'
-    },
-    {
-      id: 3,
+      id: '1',
       name: 'Багет французский',
-      price: 180,
-      image: '/img/de9fd127-4472-4f92-a045-3d04fc8d09cd.jpg',
+      description: 'Хрустящий багет с золотистой корочкой',
+      price: 80,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
       category: 'bread',
-      description: 'Классический французский багет',
       rating: 4.7,
-      ingredients: 'Мука пшеничная, дрожжи, соль, вода'
-    },
-    
-    // Выпечка
-    {
-      id: 4,
-      name: 'Круассан с миндалем',
-      price: 220,
-      image: '/img/ceb7dce3-214c-4e54-8416-7d13701d38b7.jpg',
-      category: 'pastry',
-      description: 'Слоеный круассан с миндальной начинкой',
-      rating: 4.9,
-      isNew: true,
-      ingredients: 'Мука, масло сливочное, миндаль, сахар'
+      allergens: ['глютен']
     },
     {
-      id: 5,
-      name: 'Круассан шоколадный',
-      price: 200,
-      image: '/img/ceb7dce3-214c-4e54-8416-7d13701d38b7.jpg',
-      category: 'pastry',
-      description: 'Классический круассан с шоколадом',
-      rating: 4.8,
-      isPopular: true,
-      ingredients: 'Мука, масло, шоколад темный'
-    },
-    {
-      id: 6,
-      name: 'Булочка с корицей',
-      price: 160,
-      image: '/img/ceb7dce3-214c-4e54-8416-7d13701d38b7.jpg',
-      category: 'pastry',
-      description: 'Ароматная булочка с корицей и сахаром',
+      id: '2',
+      name: 'Хлеб бородинский',
+      description: 'Ржаной хлеб с кориандром по классическому рецепту',
+      price: 65,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'bread',
       rating: 4.5,
-      ingredients: 'Мука, корица, сахар, масло'
+      allergens: ['глютен']
+    },
+    {
+      id: '3',
+      name: 'Булочка с кунжутом',
+      description: 'Мягкая булочка для бургеров с кунжутными семечками',
+      price: 45,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'bread',
+      rating: 4.3,
+      allergens: ['глютен', 'кунжут']
     },
 
     // Торты
     {
-      id: 7,
-      name: 'Торт "Медовик"',
-      price: 890,
-      image: '/img/04f5d70d-4cf5-4b1b-8663-ab5224ff25da.jpg',
+      id: '4',
+      name: 'Торт "Наполеон"',
+      description: 'Классический торт со сливочным кремом',
+      price: 1200,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
       category: 'cakes',
-      description: 'Классический медовик с нежным кремом',
       rating: 4.9,
-      isNew: true,
-      ingredients: 'Мед, мука, сметана, сахар'
+      isPopular: true,
+      allergens: ['глютен', 'яйца', 'молоко']
     },
     {
-      id: 8,
-      name: 'Торт "Наполеон"',
-      price: 750,
-      image: '/img/04f5d70d-4cf5-4b1b-8663-ab5224ff25da.jpg',
+      id: '5',
+      name: 'Торт "Медовик"',
+      description: 'Многослойный медовый торт со сметанным кремом',
+      price: 980,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
       category: 'cakes',
-      description: 'Слоеный торт с заварным кремом',
-      rating: 4.7,
+      rating: 4.8,
+      allergens: ['глютен', 'яйца', 'молоко', 'мед']
+    },
+    {
+      id: '6',
+      name: 'Торт "Красный бархат"',
+      description: 'Нежный торт с кремом из сливочного сыра',
+      price: 1400,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'cakes',
+      rating: 4.6,
+      isNew: true,
+      allergens: ['глютен', 'яйца', 'молоко']
+    },
+
+    // Круассаны
+    {
+      id: '7',
+      name: 'Круассан классический',
+      description: 'Французский круассан со сливочным маслом',
+      price: 90,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'croissants',
+      rating: 4.4,
+      allergens: ['глютен', 'молоко']
+    },
+    {
+      id: '8',
+      name: 'Круассан с шоколадом',
+      description: 'Слоеный круассан с темным шоколадом',
+      price: 120,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'croissants',
+      rating: 4.8,
       isPopular: true,
-      ingredients: 'Слоеное тесто, крем заварной'
+      allergens: ['глютен', 'молоко']
+    },
+    {
+      id: '9',
+      name: 'Круассан с миндалем',
+      description: 'Круассан с миндальной пастой и лепестками',
+      price: 140,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'croissants',
+      rating: 4.7,
+      allergens: ['глютен', 'молоко', 'орехи']
     },
 
     // Пирожные
     {
-      id: 9,
-      name: 'Эклеры с ванильным кремом',
-      price: 180,
-      image: '/img/04f5d70d-4cf5-4b1b-8663-ab5224ff25da.jpg',
-      category: 'desserts',
-      description: 'Нежные эклеры с ванильным кремом',
-      rating: 4.7,
-      isPopular: true,
-      ingredients: 'Заварное тесто, ванильный крем'
+      id: '10',
+      name: 'Эклер с кремом',
+      description: 'Классический эклер с заварным кремом',
+      price: 95,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'pastries',
+      rating: 4.6,
+      allergens: ['глютен', 'яйца', 'молоко']
     },
     {
-      id: 10,
-      name: 'Макарон ассорти',
-      price: 450,
-      image: '/img/04f5d70d-4cf5-4b1b-8663-ab5224ff25da.jpg',
-      category: 'desserts',
-      description: 'Набор из 6 макарон разных вкусов',
-      rating: 4.8,
+      id: '11',
+      name: 'Профитроль',
+      description: 'Воздушные заварные пирожные с кремом',
+      price: 75,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'pastries',
+      rating: 4.5,
+      allergens: ['глютен', 'яйца', 'молоко']
+    },
+    {
+      id: '12',
+      name: 'Тирамису',
+      description: 'Итальянский десерт с кофе и маскарпоне',
+      price: 180,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'pastries',
+      rating: 4.9,
       isNew: true,
-      ingredients: 'Миндальная мука, различные начинки'
+      allergens: ['глютен', 'яйца', 'молоко']
     },
 
-    // Кофе и напитки
+    // Печенье
     {
-      id: 11,
-      name: 'Капучино',
-      price: 180,
-      image: '/img/04f5d70d-4cf5-4b1b-8663-ab5224ff25da.jpg',
-      category: 'coffee',
-      description: 'Классический капучино из зерен арабики',
-      rating: 4.6,
-      ingredients: 'Кофе арабика, молоко'
+      id: '13',
+      name: 'Печенье овсяное',
+      description: 'Домашнее печенье с овсяными хлопьями и изюмом',
+      price: 35,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'cookies',
+      rating: 4.2,
+      allergens: ['глютен', 'молоко']
     },
     {
-      id: 12,
-      name: 'Американо',
-      price: 120,
-      image: '/img/04f5d70d-4cf5-4b1b-8663-ab5224ff25da.jpg',
-      category: 'coffee',
-      description: 'Крепкий американо',
+      id: '14',
+      name: 'Макарон ассорти',
+      description: 'Набор разноцветных французских макарон',
+      price: 250,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'cookies',
+      rating: 4.8,
+      isPopular: true,
+      allergens: ['яйца', 'орехи']
+    },
+    {
+      id: '15',
+      name: 'Имбирное печенье',
+      description: 'Ароматное печенье со специями и глазурью',
+      price: 40,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'cookies',
       rating: 4.4,
-      ingredients: 'Кофе арабика'
+      allergens: ['глютен', 'яйца', 'молоко']
+    },
+
+    // Пироги
+    {
+      id: '16',
+      name: 'Пирог с яблоками',
+      description: 'Домашний пирог с сочными яблоками и корицей',
+      price: 350,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'pies',
+      rating: 4.7,
+      allergens: ['глютен', 'яйца', 'молоко']
+    },
+    {
+      id: '17',
+      name: 'Киш лорен',
+      description: 'Французский открытый пирог с беконом и сыром',
+      price: 420,
+      image: '/img/2f587328-15b5-4c02-9abd-04a6cd4d0607.jpg',
+      category: 'pies',
+      rating: 4.6,
+      allergens: ['глютен', 'яйца', 'молоко']
     }
   ];
 
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  useEffect(() => {
+    let filtered = menuItems;
 
-  const addToCart = (product) => {
-    setCart(prev => {
-      const existingItem = prev.find(item => item.id === product.id);
-      if (existingItem) {
-        return prev.map(item => 
-          item.id === product.id 
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prev, { ...product, quantity: 1 }];
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(item => item.category === selectedCategory);
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    setFilteredItems(filtered);
+  }, [selectedCategory, searchQuery]);
+
+  const handleAddToCart = (item: MenuItem) => {
+    addToCart({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      category: item.category
+    });
+    
+    toast({
+      title: "Добавлено в корзину",
+      description: `${item.name} добавлен в вашу корзину`,
     });
   };
 
-  const getCartItemsCount = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
-      {/* Header */}
-      <header className="bg-white shadow-md sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Button variant="ghost" onClick={() => navigate('/')}>
-                <Icon name="ArrowLeft" size={20} />
-              </Button>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 rounded-lg flex items-center justify-center">
-                  <Icon name="Wheat" className="text-white" size={20} />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-gray-900">NeoBake</h1>
-                  <p className="text-sm text-gray-600">Меню</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Button variant="outline" onClick={() => navigate('/cart')}>
-                <Icon name="ShoppingCart" size={16} className="mr-2" />
-                Корзина
-                {getCartItemsCount() > 0 && (
-                  <Badge variant="destructive" className="ml-2">
-                    {getCartItemsCount()}
-                  </Badge>
-                )}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-8">
-        {/* Search and Filters */}
-        <div className="mb-8">
-          <div className="flex flex-col lg:flex-row gap-6 mb-6">
-            <div className="flex-1">
-              <div className="relative">
-                <Icon name="Search" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                <Input
-                  placeholder="Поиск по меню..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Categories */}
-          <div className="flex gap-2 overflow-x-auto pb-4">
-            {categories.map((category) => (
-              <Button
-                key={category.id}
-                variant={selectedCategory === category.id ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category.id)}
-                className="whitespace-nowrap"
-              >
-                {category.name}
-                <Badge variant="secondary" className="ml-2">
-                  {category.count}
-                </Badge>
-              </Button>
-            ))}
-          </div>
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Заголовок */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-4">Наше меню</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Свежая выпечка каждый день. Все изделия изготавливаются из натуральных ингредиентов по традиционным рецептам.
+          </p>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
-            <Card key={product.id} className="group hover:shadow-xl transition-shadow">
-              <div className="relative overflow-hidden rounded-t-lg">
-                <img 
-                  src={product.image} 
-                  alt={product.name}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-3 left-3 flex gap-2">
-                  {product.isNew && <Badge variant="secondary">Новинка</Badge>}
-                  {product.isPopular && <Badge>Популярное</Badge>}
-                </div>
-                <div className="absolute top-3 right-3">
-                  <Button variant="outline" size="sm" className="rounded-full w-8 h-8 p-0">
-                    <Icon name="Heart" size={14} />
-                  </Button>
-                </div>
-              </div>
-              
-              <CardContent className="p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="flex items-center gap-1">
-                    <Icon name="Star" className="text-yellow-500" size={14} />
-                    <span className="text-sm text-gray-600">{product.rating}</span>
-                  </div>
-                </div>
-                
-                <h4 className="font-semibold mb-2">{product.name}</h4>
-                <p className="text-sm text-gray-600 mb-3 line-clamp-2">{product.description}</p>
-                <p className="text-xs text-gray-500 mb-4">{product.ingredients}</p>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-xl font-bold text-orange-600">{product.price} ₽</span>
-                  <Button size="sm" onClick={() => addToCart(product)}>
-                    <Icon name="Plus" size={16} className="mr-1" />
-                    В корзину
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+        {/* Поиск */}
+        <div className="relative max-w-md mx-auto mb-8">
+          <Input
+            type="text"
+            placeholder="Поиск по меню..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+          <Icon name="Search" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={16} />
+        </div>
+
+        {/* Категории */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          {categories.map((category) => (
+            <Button
+              key={category.id}
+              variant={selectedCategory === category.id ? "default" : "outline"}
+              onClick={() => setSelectedCategory(category.id)}
+              className="flex items-center gap-2"
+            >
+              <Icon name={category.icon as any} size={16} />
+              {category.name}
+            </Button>
           ))}
         </div>
 
-        {filteredProducts.length === 0 && (
-          <div className="text-center py-16">
-            <Icon name="Search" className="mx-auto mb-4 text-gray-400" size={48} />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">Товары не найдены</h3>
-            <p className="text-gray-500">Попробуйте изменить параметры поиска</p>
+        {/* Статистика */}
+        <div className="text-center mb-8">
+          <p className="text-muted-foreground">
+            Показано {filteredItems.length} из {menuItems.length} позиций
+          </p>
+        </div>
+
+        {/* Товары */}
+        {filteredItems.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredItems.map((item) => (
+              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow group">
+                <div className="aspect-square overflow-hidden relative">
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                  
+                  {/* Бейджи */}
+                  <div className="absolute top-3 left-3 flex flex-col gap-2">
+                    {item.isNew && (
+                      <Badge className="bg-green-500 hover:bg-green-600">Новинка</Badge>
+                    )}
+                    {item.isPopular && (
+                      <Badge className="bg-orange-500 hover:bg-orange-600">Хит</Badge>
+                    )}
+                  </div>
+
+                  {/* Рейтинг */}
+                  <div className="absolute top-3 right-3 bg-black/70 text-white px-2 py-1 rounded-full text-sm flex items-center gap-1">
+                    <Icon name="Star" size={12} className="text-yellow-400 fill-current" />
+                    {item.rating}
+                  </div>
+                </div>
+
+                <CardContent className="p-4">
+                  <div className="mb-3">
+                    <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* Аллергены */}
+                  {item.allergens && item.allergens.length > 0 && (
+                    <div className="mb-3">
+                      <div className="flex flex-wrap gap-1">
+                        {item.allergens.map((allergen) => (
+                          <Badge key={allergen} variant="secondary" className="text-xs">
+                            {allergen}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl font-bold text-primary">
+                      {item.price} ₽
+                    </span>
+                    <Button
+                      onClick={() => handleAddToCart(item)}
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      <Icon name="Plus" size={16} />
+                      В корзину
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <Icon name="Search" size={48} className="mx-auto text-muted-foreground mb-4" />
+            <h3 className="text-xl font-semibold mb-2">Ничего не найдено</h3>
+            <p className="text-muted-foreground">
+              Попробуйте изменить поисковый запрос или выберите другую категорию
+            </p>
           </div>
         )}
+
+        {/* Информация о доставке */}
+        <div className="mt-16 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg p-8">
+          <div className="text-center">
+            <Icon name="Truck" size={48} className="mx-auto text-amber-600 mb-4" />
+            <h3 className="text-2xl font-bold mb-4">Бесплатная доставка</h3>
+            <p className="text-muted-foreground mb-6">
+              При заказе от 1000 рублей доставляем бесплатно в пределах города
+            </p>
+            <div className="flex justify-center items-center gap-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Icon name="Clock" size={16} />
+                <span>30-60 минут</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Icon name="Shield" size={16} />
+                <span>Гарантия свежести</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Icon name="Star" size={16} />
+                <span>Рейтинг 4.8</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
