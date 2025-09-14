@@ -1,43 +1,34 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from '@/components/ui/toaster';
+import HomePage from '@/pages/HomePage';
+import MenuPage from '@/pages/MenuPage';
+import CartPage from '@/pages/CartPage';
+import ProfilePage from '@/pages/ProfilePage';
+import BookingPage from '@/pages/BookingPage';
+import OrderTrackingPage from '@/pages/OrderTrackingPage';
+import { CartProvider } from '@/contexts/CartContext';
+import { AuthProvider } from '@/contexts/AuthContext';
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./hooks/useAuth";
-import Index from "./pages/Index";
-import Order from "./pages/Order";
-import Restaurant from "./pages/Restaurant";
-import Register from "./pages/Register";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
-import UserSettings from "./pages/UserSettings";
-import NotFound from "./pages/NotFound";
-
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
+function App() {
+  return (
     <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/order" element={<Order />} />
-            <Route path="/restaurant" element={<Restaurant />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<UserSettings />} />
-            <Route path="/dev-settings" element={<Settings />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <CartProvider>
+        <Router>
+          <div className="min-h-screen bg-background">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/menu" element={<MenuPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/booking" element={<BookingPage />} />
+              <Route path="/tracking" element={<OrderTrackingPage />} />
+            </Routes>
+          </div>
+          <Toaster />
+        </Router>
+      </CartProvider>
     </AuthProvider>
-  </QueryClientProvider>
-);
+  );
+}
 
 export default App;
