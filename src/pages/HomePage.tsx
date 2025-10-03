@@ -108,18 +108,18 @@ const HomePage = () => {
 
       {/* Приветствие для авторизованных пользователей */}
       {isLoggedIn && (
-        <section className="py-8 bg-gradient-to-r from-amber-50 to-orange-50">
+        <section className="py-8 bg-gradient-to-r from-blue-950 to-slate-900 border-y border-blue-500/20">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-2xl font-bold text-blue-100">
                   Добро пожаловать, {user?.name}! 👋
                 </h2>
-                <p className="text-gray-600 mt-1">
+                <p className="text-blue-200/70 mt-1">
                   У вас {user?.loyaltyPoints} баллов лояльности
                 </p>
               </div>
-              <Badge variant="secondary" className="bg-amber-100 text-amber-800">
+              <Badge variant="secondary" className="bg-blue-500/20 text-blue-300 border border-blue-500/30">
                 VIP клиент
               </Badge>
             </div>
@@ -137,8 +137,8 @@ const HomePage = () => {
               <Link key={category.id} to="/menu">
                 <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
                   <CardContent className="p-6 text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                      <Icon name={category.icon as any} size={24} className="text-amber-600" />
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform border border-blue-500/30">
+                      <Icon name={category.icon as any} size={24} className="text-blue-400" />
                     </div>
                     <h3 className="font-semibold text-sm mb-2">{category.name}</h3>
                     <p className="text-xs text-muted-foreground">{category.count} позиций</p>
@@ -200,24 +200,24 @@ const HomePage = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Icon name="Clock" size={32} className="text-green-600" />
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/30">
+                <Icon name="Clock" size={32} className="text-cyan-400" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Быстрая доставка</h3>
               <p className="text-muted-foreground">Доставляем свежую выпечку за 30-60 минут по всему городу</p>
             </div>
 
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Icon name="Award" size={32} className="text-blue-600" />
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/30">
+                <Icon name="Award" size={32} className="text-blue-400" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Высокое качество</h3>
               <p className="text-muted-foreground">Используем только натуральные ингредиенты и проверенные рецепты</p>
             </div>
 
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Icon name="Heart" size={32} className="text-purple-600" />
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/30">
+                <Icon name="Heart" size={32} className="text-cyan-300" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Сделано с любовью</h3>
               <p className="text-muted-foreground">Каждое изделие создается вручную нашими мастерами-кондитерами</p>
@@ -227,20 +227,21 @@ const HomePage = () => {
       </section>
 
       {/* CTA секция */}
-      <section className="py-16 bg-gradient-to-r from-amber-500 to-orange-500 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+      <section className="py-16 bg-gradient-to-r from-blue-600 to-cyan-500 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl font-bold mb-4">Готовы попробовать?</h2>
           <p className="text-xl mb-8 opacity-90">
             Закажите свежую выпечку прямо сейчас и получите скидку 15% на первый заказ
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="secondary" className="text-lg">
+            <Button asChild size="lg" className="text-lg bg-white text-blue-600 hover:bg-blue-50">
               <Link to="/menu">
                 <Icon name="ShoppingBag" className="mr-2" />
                 Заказать сейчас
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-lg bg-transparent border-white text-white hover:bg-white hover:text-orange-500">
+            <Button asChild size="lg" variant="outline" className="text-lg bg-transparent border-white text-white hover:bg-white hover:text-blue-600">
               <Link to="/booking">
                 <Icon name="Phone" className="mr-2" />
                 Связаться с нами
@@ -251,46 +252,46 @@ const HomePage = () => {
       </section>
 
       {/* Футер */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-slate-950 text-white py-12 border-t border-blue-500/20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
                 <img 
-                  src="/img/f85efabd-7d93-4e4a-aaf2-b669994488b9.jpg" 
+                  src="/img/00b11ba1-4b44-487d-8a9e-3a3532952077.jpg" 
                   alt="NeoBake" 
                   className="w-8 h-8 rounded-lg"
                 />
-                <span className="text-xl font-bold">NeoBake</span>
+                <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">NeoBake</span>
               </div>
-              <p className="text-gray-400 text-sm">
+              <p className="text-blue-200/50 text-sm">
                 Современная пекарня с традиционными рецептами и инновационным подходом к качеству.
               </p>
             </div>
 
             <div>
-              <h4 className="font-semibold mb-4">Меню</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><Link to="/menu" className="hover:text-white">Хлеб и булочки</Link></li>
-                <li><Link to="/menu" className="hover:text-white">Торты</Link></li>
-                <li><Link to="/menu" className="hover:text-white">Круассаны</Link></li>
-                <li><Link to="/menu" className="hover:text-white">Пирожные</Link></li>
+              <h4 className="font-semibold mb-4 text-blue-300">Меню</h4>
+              <ul className="space-y-2 text-sm text-blue-200/50">
+                <li><Link to="/menu" className="hover:text-blue-300 transition-colors">Хлеб и булочки</Link></li>
+                <li><Link to="/menu" className="hover:text-blue-300 transition-colors">Торты</Link></li>
+                <li><Link to="/menu" className="hover:text-blue-300 transition-colors">Круассаны</Link></li>
+                <li><Link to="/menu" className="hover:text-blue-300 transition-colors">Пирожные</Link></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-semibold mb-4">Сервисы</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><Link to="/booking" className="hover:text-white">Бронирование столиков</Link></li>
-                <li><Link to="/tracking" className="hover:text-white">Отследить заказ</Link></li>
-                <li><Link to="/profile" className="hover:text-white">Личный кабинет</Link></li>
-                <li><Link to="/" className="hover:text-white">Программа лояльности</Link></li>
+              <h4 className="font-semibold mb-4 text-blue-300">Сервисы</h4>
+              <ul className="space-y-2 text-sm text-blue-200/50">
+                <li><Link to="/booking" className="hover:text-blue-300 transition-colors">Бронирование столиков</Link></li>
+                <li><Link to="/tracking" className="hover:text-blue-300 transition-colors">Отследить заказ</Link></li>
+                <li><Link to="/profile" className="hover:text-blue-300 transition-colors">Личный кабинет</Link></li>
+                <li><Link to="/" className="hover:text-blue-300 transition-colors">Программа лояльности</Link></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-semibold mb-4">Контакты</h4>
-              <div className="space-y-2 text-sm text-gray-400">
+              <h4 className="font-semibold mb-4 text-blue-300">Контакты</h4>
+              <div className="space-y-2 text-sm text-blue-200/50">
                 <p>📞 +7 (999) 123-45-67</p>
                 <p>📧 info@neobake.ru</p>
                 <p>📍 ул. Пекарская, 15</p>
@@ -299,7 +300,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+          <div className="border-t border-blue-500/20 mt-8 pt-8 text-center text-sm text-blue-200/50">
             <p>© 2024 NeoBake. Все права защищены.</p>
           </div>
         </div>

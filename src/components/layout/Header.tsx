@@ -29,11 +29,11 @@ const Header = () => {
           {/* Лого */}
           <Link to="/" className="flex items-center space-x-3">
             <img 
-              src="/img/f85efabd-7d93-4e4a-aaf2-b669994488b9.jpg" 
+              src="/img/00b11ba1-4b44-487d-8a9e-3a3532952077.jpg" 
               alt="NeoBake" 
               className="w-10 h-10 rounded-lg object-cover"
             />
-            <span className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
               NeoBake
             </span>
           </Link>

@@ -384,24 +384,24 @@ const MenuPage = () => {
         )}
 
         {/* Информация о доставке */}
-        <div className="mt-16 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg p-8">
+        <div className="mt-16 bg-gradient-to-r from-blue-950 to-slate-900 rounded-lg p-8 border border-blue-500/30">
           <div className="text-center">
-            <Icon name="Truck" size={48} className="mx-auto text-amber-600 mb-4" />
-            <h3 className="text-2xl font-bold mb-4">Бесплатная доставка</h3>
-            <p className="text-muted-foreground mb-6">
+            <Icon name="Truck" size={48} className="mx-auto text-cyan-400 mb-4" />
+            <h3 className="text-2xl font-bold mb-4 text-blue-100">Бесплатная доставка</h3>
+            <p className="text-blue-200/70 mb-6">
               При заказе от 1000 рублей доставляем бесплатно в пределах города
             </p>
-            <div className="flex justify-center items-center gap-8 text-sm text-muted-foreground">
+            <div className="flex justify-center items-center gap-8 text-sm text-blue-200/60">
               <div className="flex items-center gap-2">
-                <Icon name="Clock" size={16} />
+                <Icon name="Clock" size={16} className="text-cyan-400" />
                 <span>30-60 минут</span>
               </div>
               <div className="flex items-center gap-2">
-                <Icon name="Shield" size={16} />
+                <Icon name="Shield" size={16} className="text-cyan-400" />
                 <span>Гарантия свежести</span>
               </div>
               <div className="flex items-center gap-2">
-                <Icon name="Star" size={16} />
+                <Icon name="Star" size={16} className="text-cyan-400" />
                 <span>Рейтинг 4.8</span>
               </div>
             </div>
