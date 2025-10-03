@@ -76,13 +76,13 @@ const HomePage = () => {
               {heroSlides[currentSlide].subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="text-lg">
+              <Button asChild size="lg" className="text-lg animate-button-glow">
                 <Link to="/menu">
                   <Icon name="ShoppingBag" className="mr-2" />
                   Смотреть меню
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="text-lg bg-white/10 border-white text-white hover:bg-white hover:text-black">
+              <Button asChild variant="outline" size="lg" className="text-lg bg-white/10 border-white text-white hover:bg-white hover:text-black animate-border-glow">
                 <Link to="/booking">
                   <Icon name="Calendar" className="mr-2" />
                   Забронировать столик
@@ -135,9 +135,9 @@ const HomePage = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {categories.map((category) => (
               <Link key={category.id} to="/menu">
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer group hover:animate-border-glow">
                   <CardContent className="p-6 text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform border border-blue-500/30">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform border border-blue-500/30 group-hover:animate-neon-glow">
                       <Icon name={category.icon as any} size={24} className="text-blue-400" />
                     </div>
                     <h3 className="font-semibold text-sm mb-2">{category.name}</h3>
@@ -165,12 +165,12 @@ const HomePage = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {popularItems.map((item) => (
-              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow group hover:animate-border-glow">
                 <div className="aspect-square overflow-hidden">
                   <img 
                     src={item.image} 
                     alt={item.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
                 <CardContent className="p-4">
@@ -182,7 +182,7 @@ const HomePage = () => {
                       <span className="text-sm text-muted-foreground">{item.rating}</span>
                     </div>
                   </div>
-                  <Button className="w-full" size="sm">
+                  <Button className="w-full hover:animate-button-glow" size="sm">
                     <Icon name="Plus" size={16} className="mr-2" />
                     В корзину
                   </Button>
@@ -199,24 +199,24 @@ const HomePage = () => {
           <h2 className="text-3xl font-bold text-center mb-12">Почему выбирают нас</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/30">
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/30 group-hover:animate-neon-glow transition-all">
                 <Icon name="Clock" size={32} className="text-cyan-400" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Быстрая доставка</h3>
               <p className="text-muted-foreground">Доставляем свежую выпечку за 30-60 минут по всему городу</p>
             </div>
 
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/30">
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/30 group-hover:animate-neon-glow transition-all">
                 <Icon name="Award" size={32} className="text-blue-400" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Высокое качество</h3>
               <p className="text-muted-foreground">Используем только натуральные ингредиенты и проверенные рецепты</p>
             </div>
 
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/30">
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/30 group-hover:animate-neon-glow transition-all">
                 <Icon name="Heart" size={32} className="text-cyan-300" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Сделано с любовью</h3>
@@ -235,13 +235,13 @@ const HomePage = () => {
             Закажите свежую выпечку прямо сейчас и получите скидку 15% на первый заказ
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="text-lg bg-white text-blue-600 hover:bg-blue-50">
+            <Button asChild size="lg" className="text-lg bg-white text-blue-600 hover:bg-blue-50 animate-button-glow">
               <Link to="/menu">
                 <Icon name="ShoppingBag" className="mr-2" />
                 Заказать сейчас
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-lg bg-transparent border-white text-white hover:bg-white hover:text-blue-600">
+            <Button asChild size="lg" variant="outline" className="text-lg bg-transparent border-white text-white hover:bg-white hover:text-blue-600 animate-border-glow">
               <Link to="/booking">
                 <Icon name="Phone" className="mr-2" />
                 Связаться с нами
@@ -260,9 +260,9 @@ const HomePage = () => {
                 <img 
                   src="/img/00b11ba1-4b44-487d-8a9e-3a3532952077.jpg" 
                   alt="NeoBake" 
-                  className="w-8 h-8 rounded-lg"
+                  className="w-8 h-8 rounded-lg animate-neon-glow"
                 />
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">NeoBake</span>
+                <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent animate-text-neon">NeoBake</span>
               </div>
               <p className="text-blue-200/50 text-sm">
                 Современная пекарня с традиционными рецептами и инновационным подходом к качеству.

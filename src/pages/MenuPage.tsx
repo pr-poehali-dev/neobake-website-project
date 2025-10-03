@@ -291,7 +291,7 @@ const MenuPage = () => {
               key={category.id}
               variant={selectedCategory === category.id ? "default" : "outline"}
               onClick={() => setSelectedCategory(category.id)}
-              className="flex items-center gap-2"
+              className={`flex items-center gap-2 ${selectedCategory === category.id ? 'animate-button-glow' : 'hover:animate-border-glow'}`}
             >
               <Icon name={category.icon as any} size={16} />
               {category.name}
@@ -310,12 +310,12 @@ const MenuPage = () => {
         {filteredItems.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredItems.map((item) => (
-              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow group">
+              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow group hover:animate-border-glow">
                 <div className="aspect-square overflow-hidden relative">
                   <img 
                     src={item.image} 
                     alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                   
                   {/* Бейджи */}
@@ -363,7 +363,7 @@ const MenuPage = () => {
                     <Button
                       onClick={() => handleAddToCart(item)}
                       size="sm"
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 hover:animate-button-glow"
                     >
                       <Icon name="Plus" size={16} />
                       В корзину
